@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KnitNote – 編み物ノート</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Zen+Kaku+Gothic+New:wght@300;400;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Variables ───────────────────────────────────────────────── */
+:root {
+  --cream: #faf6f0;
+  --blush: #e8d5c8;
+  --dusty-rose: #c9a090;
+  --terracotta: #b5634a;
+  --bark: #6b4535;
+  --sage: #8a9e8c;
+  --sage-light: #c8d8c4;
+  --ink: #2a1f1a;
+  --muted: #9a8880;
+  --line: #e0d4cc;
+  --card: #fffcf8;
+  --shadow: rgba(107,69,53,0.1);
+  --sidebar-w: 260px;
+  --content-max: 760px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  background: var(--cream);
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────────── */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar (PC) ────────────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--bark);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 50;
+  overflow: hidden;
+}
+
+.sidebar-logo {
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.sidebar-logo-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1;
+}
+.sidebar-logo-title em { font-style: italic; color: var(--blush); }
+.sidebar-logo-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.4);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+.sidebar-nav { flex: 1; padding: 16px 12px; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-bottom: 4px;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.88rem;
+}
+.nav-item:hover { background: rgba(255,255,255,0.08); }
+.nav-item.active {
+  background: rgba(255,255,255,0.15);
+  color: var(--cream);
+}
+.nav-item.active .nav-icon { background: var(--terracotta); }
+.nav-icon {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  background: rgba(255,255,255,0.08);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.nav-label { font-weight: 400; letter-spacing: 0.02em; }
+
+.sidebar-footer {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.1em;
+}
+
+/* ── Main content area ───────────────────────────────────────────────── */
+.main-area {
+  flex: 1;
+  margin-left: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Top bar (PC) */
+.top-bar {
+  height: 64px;
+  background: rgba(250,246,240,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  flex-shrink: 0;
+}
+.top-bar-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.top-bar-title em { font-style: italic; color: var(--terracotta); }
+.top-bar-btn {
+  background: var(--terracotta);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 3px 12px rgba(181,99,74,0.3);
+}
+.top-bar-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 16px rgba(181,99,74,0.4); }
+
+/* ── Page content ────────────────────────────────────────────────────── */
+.page { display: none; flex-direction: column; flex: 1; }
+.page.active { display: flex; }
+.page-content { padding: 32px; max-width: var(--content-max); width: 100%; }
+
+/* ── Stats row ───────────────────────────────────────────────────────── */
+.stats-row { display: flex; gap: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+.stat-chip {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 20px;
+  flex: 1; min-width: 100px;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--terracotta); line-height: 1; }
+.stat-label { font-size: 0.65rem; color: var(--muted); margin-top: 4px; letter-spacing: 0.05em; }
+
+/* ── Section heading ─────────────────────────────────────────────────── */
+.section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.section-head h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 600; color: var(--ink); letter-spacing: 0.02em;
+}
+.see-all { font-size: 0.65rem; color: var(--terracotta); font-family: 'DM Mono', monospace; cursor: pointer; letter-spacing: 0.08em; }
+
+/* ── Project grid (PC: 2 col, mobile: 1 col) ────────────────────────── */
+.project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+.project-card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 3px 16px var(--shadow);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative; overflow: hidden;
+}
+.project-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--shadow); }
+.project-card:active { transform: scale(0.99); }
+.project-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--tc1, var(--terracotta)), var(--tc2, var(--dusty-rose)));
+}
+.project-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
+.project-icon { font-size: 1.8rem; line-height: 1; }
+.project-status {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.1em; padding: 4px 10px; border-radius: 20px; text-transform: uppercase;
+}
+.status-active { background: #fde8e0; color: var(--terracotta); }
+.status-done   { background: #e0ede0; color: #4a8a4a; }
+.status-paused { background: #f0ece8; color: var(--muted); }
+.project-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  font-weight: 600; color: var(--ink); margin-bottom: 4px;
+}
+.project-yarn { font-size: 0.7rem; color: var(--muted); margin-bottom: 12px; }
+.progress-bar-wrap { height: 5px; background: var(--line); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+.progress-bar-fill {
+  height: 100%; border-radius: 3px; transition: width 0.6s ease;
+  background: linear-gradient(90deg, var(--tc1, var(--terracotta)), var(--tc2, var(--dusty-rose)));
+}
+.project-bottom { display: flex; justify-content: space-between; align-items: center; }
+.progress-text { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); }
+.row-badge {
+  background: var(--blush); border-radius: 10px; padding: 3px 10px;
+  font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--bark);
+}
+
+.empty-state { text-align: center; padding: 60px 24px; color: var(--muted); }
+.empty-state .empty-icon { font-size: 3rem; margin-bottom: 16px; }
+.empty-state p { font-size: 0.88rem; line-height: 1.8; }
+.empty-state .empty-cta {
+  display: inline-block; margin-top: 20px; background: var(--terracotta); color: white;
+  border: none; border-radius: 12px; padding: 10px 24px;
+  font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+/* ── Counter page ────────────────────────────────────────────────────── */
+.counter-page-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.counter-left { display: flex; flex-direction: column; align-items: center; }
+.counter-project-selector {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; width: 100%;
+}
+.counter-chip {
+  padding: 8px 16px; border-radius: 20px; font-size: 0.72rem;
+  border: 1.5px solid var(--line); color: var(--muted); cursor: pointer;
+  transition: all 0.15s; white-space: nowrap; background: var(--card);
+}
+.counter-chip.active { background: var(--terracotta); border-color: var(--terracotta); color: white; }
+
+.counter-circle {
+  width: 220px; height: 220px;
+  background: var(--card); border-radius: 50%;
+  border: 3px solid var(--blush);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 8px 40px var(--shadow), inset 0 2px 8px rgba(255,255,255,0.8);
+  margin-bottom: 28px; position: relative;
+}
+.counter-circle::before {
+  content: ''; position: absolute; inset: 8px; border-radius: 50%;
+  border: 1px dashed var(--blush);
+}
+.counter-num {
+  font-family: 'Cormorant Garamond', serif; font-size: 3.6rem;
+  font-weight: 300; color: var(--ink); line-height: 0.9;
+}
+.counter-unit { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted); margin-top: 10px; }
+.counter-target-label { font-size: 0.7rem; color: var(--dusty-rose); margin-top: 4px; }
+
+.counter-btns { display: flex; gap: 16px; width: 100%; max-width: 280px; margin-bottom: 20px; }
+.btn-counter {
+  flex: 1; height: 60px; border: none; border-radius: 18px;
+  font-family: 'Cormorant Garamond', serif; cursor: pointer;
+  transition: transform 0.1s; display: flex; align-items: center; justify-content: center;
+}
+.btn-counter:active { transform: scale(0.94); }
+.btn-minus { background: var(--card); border: 2px solid var(--line) !important; color: var(--muted); font-size: 1.8rem; box-shadow: 0 3px 10px var(--shadow); }
+.btn-plus  { background: var(--terracotta); color: white; font-size: 2rem; box-shadow: 0 6px 20px rgba(181,99,74,0.4); border: none !important; }
+
+.counter-progress { width: 100%; max-width: 280px; }
+.counter-prog-bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin-bottom: 6px; }
+.counter-prog-fill { height: 100%; background: linear-gradient(90deg, var(--terracotta), var(--dusty-rose)); border-radius: 4px; transition: width 0.4s ease; }
+.counter-prog-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); }
+
+.counter-right {}
+.counter-info-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 20px; padding: 20px; margin-bottom: 16px;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.counter-info-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600;
+  color: var(--ink); margin-bottom: 4px;
+}
+.counter-info-sub { font-size: 0.72rem; color: var(--muted); }
+.history-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 20px; padding: 20px;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.history-title { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.history-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.history-dot {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 0.55rem; color: white;
+}
+
+.counter-empty { text-align: center; padding: 60px; color: var(--muted); font-size: 0.88rem; }
+
+/* ── Pattern page ────────────────────────────────────────────────────── */
+.pattern-project-selector {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.proj-chip {
+  padding: 8px 16px; border-radius: 20px; font-size: 0.72rem;
+  border: 1.5px solid var(--line); color: var(--muted); cursor: pointer;
+  white-space: nowrap; transition: all 0.15s; background: var(--card);
+}
+.proj-chip.active { background: var(--terracotta); border-color: var(--terracotta); color: white; }
+
+.pattern-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+
+.pattern-card {
+  background: var(--card); border-radius: 20px; padding: 20px;
+  border: 1px solid var(--line); box-shadow: 0 3px 12px var(--shadow); margin-bottom: 16px;
+}
+.pattern-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.pattern-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+.pattern-edit { font-size: 0.65rem; color: var(--terracotta); font-family: 'DM Mono', monospace; cursor: pointer; padding: 4px 10px; border: 1px solid var(--terracotta); border-radius: 8px; transition: all 0.15s; }
+.pattern-edit:hover { background: var(--terracotta); color: white; }
+.pattern-text { font-size: 0.82rem; color: var(--ink); line-height: 1.8; }
+
+.needle-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.needle-chip {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 10px 14px; display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 2px 6px var(--shadow);
+}
+.needle-chip-icon { font-size: 1rem; }
+.needle-chip-size { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--ink); }
+.needle-chip-type { font-size: 0.6rem; color: var(--muted); }
+
+.yarn-list { display: flex; flex-direction: column; gap: 10px; }
+.yarn-card {
+  background: var(--card); border-radius: 16px; padding: 14px 16px;
+  border: 1px solid var(--line); display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.yarn-swatch { width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+.yarn-info { flex: 1; }
+.yarn-name { font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.yarn-detail { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); }
+
+.pattern-empty { text-align: center; padding: 60px; color: var(--muted); font-size: 0.88rem; line-height: 1.8; }
+
+/* ── FAB (mobile only) ───────────────────────────────────────────────── */
+.fab {
+  display: none;
+  position: fixed; bottom: 88px; right: 20px;
+  width: 56px; height: 56px; background: var(--terracotta);
+  border-radius: 18px; align-items: center; justify-content: center;
+  font-size: 1.6rem; box-shadow: 0 6px 20px rgba(181,99,74,0.45);
+  cursor: pointer; transition: transform 0.15s; z-index: 40;
+}
+.fab:active { transform: scale(0.93); }
+
+/* ── Bottom nav (mobile only) ────────────────────────────────────────── */
+.bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 72px; background: rgba(250,246,240,0.96);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--line);
+  z-index: 40;
+  align-items: flex-start;
+  padding-top: 8px;
+}
+.bottom-nav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+  cursor: pointer; padding: 4px 0;
+}
+.bottom-nav-icon {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; transition: all 0.2s;
+}
+.bottom-nav-item.active .bottom-nav-icon { background: var(--terracotta); }
+.bottom-nav-label { font-size: 0.58rem; color: var(--muted); letter-spacing: 0.04em; }
+.bottom-nav-item.active .bottom-nav-label { color: var(--terracotta); font-weight: 700; }
+
+/* ── Modal ───────────────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(42,31,26,0); pointer-events: none;
+  transition: background 0.3s ease;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.modal-overlay.open { background: rgba(42,31,26,0.4); pointer-events: all; }
+
+.sheet {
+  background: var(--cream); border-radius: 28px 28px 0 0;
+  transform: translateY(100%); transition: transform 0.38s cubic-bezier(0.32,0.72,0,1);
+  width: 100%; max-width: 560px;
+  max-height: 90vh; overflow-y: auto; scrollbar-width: none;
+  padding-bottom: 40px;
+}
+.sheet::-webkit-scrollbar { display: none; }
+.modal-overlay.open .sheet { transform: translateY(0); }
+.sheet-handle { width: 36px; height: 4px; background: var(--line); border-radius: 2px; margin: 12px auto 0; }
+.sheet-header { padding: 18px 28px 0; display: flex; align-items: flex-start; justify-content: space-between; }
+.sheet-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--ink); line-height: 1.1; }
+.sheet-title em { font-style: italic; color: var(--terracotta); }
+.btn-close {
+  width: 32px; height: 32px; background: var(--blush); border: none; border-radius: 50%;
+  font-size: 0.8rem; color: var(--bark); cursor: pointer; flex-shrink: 0; margin-top: 4px;
+  display: flex; align-items: center; justify-content: center; transition: background 0.15s;
+}
+.btn-close:hover { background: var(--dusty-rose); color: white; }
+
+/* Steps */
+.steps-row { display: flex; align-items: center; gap: 6px; padding: 16px 28px 0; }
+.step-dot { width: 8px; height: 8px; border-radius: 4px; background: var(--line); transition: all 0.3s ease; }
+.step-dot.active { width: 24px; background: var(--terracotta); }
+.step-dot.done { background: var(--sage); }
+.step-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; margin-left: 4px; }
+
+/* Form */
+.form-step { display: none; padding: 20px 28px 0; }
+.form-step.active { display: block; animation: fadeUp 0.25s ease both; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.field { margin-bottom: 20px; }
+.field-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; display: block; }
+.field-input {
+  width: 100%; background: var(--card); border: 1.5px solid var(--line); border-radius: 14px;
+  padding: 13px 16px; font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.95rem;
+  color: var(--ink); outline: none; transition: border-color 0.2s, box-shadow 0.2s; -webkit-appearance: none;
+}
+.field-input:focus { border-color: var(--terracotta); box-shadow: 0 0 0 3px rgba(181,99,74,0.12); }
+.field-input::placeholder { color: var(--line); }
+.field-input.error { border-color: var(--terracotta); box-shadow: 0 0 0 3px rgba(181,99,74,0.12); }
+textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
+.field-row { display: flex; gap: 12px; }
+.field-row .field { flex: 1; }
+.field-error { display: none; font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--terracotta); margin-top: 6px; letter-spacing: 0.05em; }
+.field-error.visible { display: block; }
+
+.icon-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 8px; }
+.icon-btn {
+  aspect-ratio: 1; background: var(--card); border: 1.5px solid var(--line); border-radius: 14px;
+  font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+}
+.icon-btn.selected { border-color: var(--terracotta); background: #fdf0ec; box-shadow: 0 0 0 2px rgba(181,99,74,0.2); }
+
+.color-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+.color-btn { width: 36px; height: 36px; border-radius: 50%; border: 2.5px solid transparent; cursor: pointer; transition: all 0.15s; position: relative; }
+.color-btn.selected { border-color: var(--ink); transform: scale(1.1); }
+.color-btn.selected::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+
+.needle-type-row { display: flex; gap: 10px; }
+.needle-type-btn {
+  flex: 1; background: var(--card); border: 1.5px solid var(--line); border-radius: 16px;
+  padding: 14px 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+}
+.needle-type-btn.selected { background: #fdf0ec; border-color: var(--terracotta); box-shadow: 0 0 0 2px rgba(181,99,74,0.15); }
+.needle-type-label { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.9rem; color: var(--ink); }
+.needle-type-btn.selected .needle-type-label { color: var(--terracotta); font-weight: 700; }
+
+.stepper { display: flex; align-items: center; background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; overflow: hidden; }
+.stepper-btn { width: 48px; height: 48px; background: none; border: none; font-size: 1.2rem; color: var(--terracotta); cursor: pointer; flex-shrink: 0; transition: background 0.1s; }
+.stepper-btn:active { background: var(--blush); }
+.stepper-val { flex: 1; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--ink); border: none; background: none; outline: none; -moz-appearance: textfield; }
+.stepper-val::-webkit-inner-spin-button, .stepper-val::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+.yarn-entry { background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; padding: 14px; margin-bottom: 10px; position: relative; }
+.yarn-entry-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.yarn-color-pick { width: 44px; height: 44px; border-radius: 12px; border: 2px solid var(--line); cursor: pointer; flex-shrink: 0; }
+.btn-add-yarn { width: 100%; background: none; border: 1.5px dashed var(--line); border-radius: 14px; padding: 12px; font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); cursor: pointer; transition: all 0.15s; }
+.btn-add-yarn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+.yarn-delete { position: absolute; top: 10px; right: 10px; width: 24px; height: 24px; background: var(--blush); border: none; border-radius: 50%; font-size: 0.65rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+.yarn-delete:hover { background: var(--terracotta); color: white; }
+
+.form-nav { display: flex; gap: 10px; padding: 20px 28px 0; }
+.btn-back { width: 48px; height: 52px; background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; font-size: 1rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
+.btn-back:active { background: var(--blush); }
+.btn-back.text { width: auto; flex: 0 0 auto; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em; padding: 0 14px; color: var(--muted); }
+.btn-next { flex: 1; height: 52px; background: var(--terracotta); border: none; border-radius: 16px; font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; color: white; cursor: pointer; transition: all 0.15s; box-shadow: 0 4px 16px rgba(181,99,74,0.35); display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-next:hover { transform: translateY(-1px); }
+.btn-next:active { transform: scale(0.97); }
+
+/* Preview / success */
+.preview-card { background: var(--card); border-radius: 20px; padding: 18px; border: 1px solid var(--line); box-shadow: 0 3px 16px var(--shadow); position: relative; overflow: hidden; width: 100%; margin-bottom: 12px; }
+.preview-card::before { content: ''; position: absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, var(--pc1, var(--terracotta)), var(--pc2, var(--dusty-rose))); }
+.preview-icon-name { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.preview-icon { font-size: 1.8rem; }
+.preview-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--ink); }
+.preview-meta { font-size: 0.7rem; color: var(--muted); margin-bottom: 10px; line-height: 1.6; white-space: pre-line; }
+.preview-progress-bar { height: 5px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.preview-progress-fill { height: 100%; width: 0%; border-radius: 3px; }
+
+.success-content { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 24px 28px 0; }
+.success-icon { font-size: 3rem; margin-bottom: 10px; animation: bounceIn 0.5s cubic-bezier(0.36,0.07,0.19,0.97) both; }
+@keyframes bounceIn { 0%{transform:scale(0.3);opacity:0} 50%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
+.success-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--ink); margin-bottom: 6px; }
+.success-title em { font-style: italic; color: var(--terracotta); }
+.success-sub { font-size: 0.78rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+.btn-start { width: 100%; height: 52px; background: var(--terracotta); border: none; border-radius: 16px; font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; color: white; cursor: pointer; box-shadow: 0 4px 16px rgba(181,99,74,0.4); margin-bottom: 10px; }
+.btn-another { width: 100%; height: 46px; background: none; border: 1.5px solid var(--line); border-radius: 14px; font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); cursor: pointer; }
+
+@keyframes popIn { 0%{transform:scale(1)} 40%{transform:scale(1.15);color:var(--terracotta)} 100%{transform:scale(1)} }
+.pop { animation: popIn 0.25s ease; }
+
+/* ── AdSense banner ──────────────────────────────────────────────────── */
+.ad-banner-wrap {
+  margin: 0 auto;
+  padding: 12px 24px 0;
+  max-width: 860px;
+  text-align: center;
+}
+.ad-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  color: var(--line);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+
+/* ── Sidebar extras ──────────────────────────────────────────────────── */
+.sidebar-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 10px 12px; }
+.nav-item-link { text-decoration: none; }
+
+/* ── Hamburger button (mobile only) ─────────────────────────────────── */
+.hamburger-btn {
+  display: none;
+  flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+  width: 38px; height: 38px; background: var(--card); border: 1.5px solid var(--line);
+  border-radius: 10px; cursor: pointer; flex-shrink: 0; transition: background 0.15s;
+}
+.hamburger-btn span {
+  display: block; width: 16px; height: 1.5px;
+  background: var(--ink); border-radius: 2px; transition: all 0.2s;
+}
+.hamburger-btn:active { background: var(--blush); }
+
+/* ── Mobile menu drawer ──────────────────────────────────────────────── */
+.mobile-menu-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(42,31,26,0.35); z-index: 200;
+}
+.mobile-menu-overlay.open { display: block; }
+.mobile-menu {
+  position: fixed; top: 0; right: -280px; bottom: 0; width: 280px;
+  background: var(--cream); z-index: 201; padding: 0;
+  box-shadow: -8px 0 32px rgba(0,0,0,0.15);
+  transition: right 0.3s cubic-bezier(0.32,0.72,0,1);
+  display: flex; flex-direction: column;
+}
+.mobile-menu.open { right: 0; }
+.mobile-menu-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 20px 16px; border-bottom: 1px solid var(--line);
+}
+.mobile-menu-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; color: var(--ink);
+}
+.mobile-menu-title em { font-style: italic; color: var(--terracotta); }
+.mobile-menu-close {
+  width: 30px; height: 30px; background: var(--blush); border: none; border-radius: 50%;
+  font-size: 0.75rem; color: var(--bark); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.mobile-menu-section-label {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--muted); padding: 16px 20px 8px;
+}
+.mobile-menu-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; text-decoration: none; color: var(--ink);
+  font-size: 0.9rem; border-bottom: 1px solid var(--line);
+  transition: background 0.15s;
+}
+.mobile-menu-item:hover { background: #f5ede6; color: var(--terracotta); }
+.mobile-menu-icon { font-size: 1.1rem; }
+
+/* ── Responsive: mobile ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main-area { margin-left: 0; padding-bottom: 72px; }
+  .top-bar { padding: 0 16px; }
+  .top-bar-btn { display: none; }
+  .hamburger-btn { display: flex; }
+  .page-content { padding: 20px 16px; }
+  .project-grid { grid-template-columns: 1fr; }
+  .counter-page-layout { grid-template-columns: 1fr; }
+  .pattern-layout { grid-template-columns: 1fr; }
+  .fab { display: flex; }
+  .bottom-nav { display: flex; }
+}
+@media (max-width: 480px) {
+  .stats-row { gap: 8px; }
+  .stat-chip { padding: 12px 14px; }
+  .stat-num { font-size: 1.6rem; }
+}
+
+/* ── Responsive: tablet ──────────────────────────────────────────────── */
+@media (min-width: 769px) and (max-width: 1100px) {
+  :root { --sidebar-w: 220px; }
+  .page-content { padding: 24px; }
+  .project-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+  <!-- ===== Google AdSense ===== -->
+  <!-- 審査通過後に ca-pub-XXXXXXXXXX を実際のパブリッシャーIDに差し替えてください -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- ── Sidebar ─────────────────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-title">Knit<em>Note</em></div>
+      <div class="sidebar-logo-sub">編み物ノート</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" id="snav-home" onclick="showPage('page-home');setSideNav('snav-home')">
+        <div class="nav-icon">🧶</div>
+        <span class="nav-label">プロジェクト</span>
+      </div>
+      <div class="nav-item" id="snav-counter" onclick="showPage('page-counter');setSideNav('snav-counter')">
+        <div class="nav-icon">🔢</div>
+        <span class="nav-label">段数カウンター</span>
+      </div>
+      <div class="nav-item" id="snav-pattern" onclick="showPage('page-pattern');setSideNav('snav-pattern');renderPattern()">
+        <div class="nav-icon">📋</div>
+        <span class="nav-label">編み図メモ</span>
+      </div>
+      <div class="sidebar-divider"></div>
+      <a class="nav-item nav-item-link" href="knit_note_about.html">
+        <div class="nav-icon">📖</div>
+        <span class="nav-label">アプリについて</span>
+      </a>
+      <a class="nav-item nav-item-link" href="knit_note_contact.html">
+        <div class="nav-icon">✉️</div>
+        <span class="nav-label">お問い合わせ</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">DATA SAVED LOCALLY</div>
+  </aside>
+
+  <!-- ── Main ────────────────────────────────────────────────────────── -->
+  <div class="main-area">
+
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="top-bar-title" id="topBarTitle">My <em>Projects</em></div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="top-bar-btn" onclick="openModal()">＋ 新規プロジェクト</button>
+        <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="メニュー">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile menu drawer -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-header">
+        <div class="mobile-menu-title">Knit<em>Note</em></div>
+        <button class="mobile-menu-close" onclick="closeMobileMenu()">✕</button>
+      </div>
+      <div class="mobile-menu-section-label">メニュー</div>
+      <a class="mobile-menu-item" href="knit_note_about.html">
+        <span class="mobile-menu-icon">📖</span>アプリについて
+      </a>
+      <a class="mobile-menu-item" href="knit_note_contact.html">
+        <span class="mobile-menu-icon">✉️</span>お問い合わせ
+      </a>
+    </div>
+
+    <!-- ── HOME ──────────────────────────────────────────────────────── -->
+    <div class="page active" id="page-home">
+      <div class="page-content">
+        <div class="stats-row">
+          <div class="stat-chip"><div class="stat-num" id="stat-active">0</div><div class="stat-label">進行中</div></div>
+          <div class="stat-chip"><div class="stat-num" id="stat-done">0</div><div class="stat-label">完成</div></div>
+          <div class="stat-chip"><div class="stat-num" id="stat-yarn">0</div><div class="stat-label">糸の種類</div></div>
+        </div>
+        <div class="section-head">
+          <h2>プロジェクト一覧</h2>
+        </div>
+        <div class="project-grid" id="projectList"></div>
+      </div>
+    </div>
+
+    <!-- ── COUNTER ───────────────────────────────────────────────────── -->
+    <div class="page" id="page-counter">
+      <div class="page-content" style="max-width:900px">
+        <div class="counter-project-selector" id="counterSelector"></div>
+        <div id="counterBody">
+          <div class="counter-empty">プロジェクトを選択してください</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PATTERN ───────────────────────────────────────────────────── -->
+    <div class="page" id="page-pattern">
+      <div class="page-content" style="max-width:900px">
+        <div class="pattern-project-selector" id="patternSelector"></div>
+        <div id="patternContent"></div>
+      </div>
+    </div>
+
+  </div><!-- /main-area -->
+</div><!-- /app-layout -->
+
+
+  <!-- ── 広告エリア（フッター上） ───────────────────────────────────────── -->
+  <!-- 審査通過後に data-ad-client / data-ad-slot を実際の値に差し替えてください -->
+  <div class="ad-banner-wrap">
+    <div class="ad-label">広告</div>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+<!-- FAB (mobile) -->
+<div class="fab" onclick="openModal()">＋</div>
+
+<!-- Bottom nav (mobile) -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-item active" id="bnav-home" onclick="showPage('page-home');setBottomNav('bnav-home')">
+    <div class="bottom-nav-icon">🧶</div><div class="bottom-nav-label">プロジェクト</div>
+  </div>
+  <div class="bottom-nav-item" id="bnav-counter" onclick="showPage('page-counter');setBottomNav('bnav-counter')">
+    <div class="bottom-nav-icon">🔢</div><div class="bottom-nav-label">カウンター</div>
+  </div>
+  <div class="bottom-nav-item" id="bnav-pattern" onclick="showPage('page-pattern');setBottomNav('bnav-pattern');renderPattern()">
+    <div class="bottom-nav-icon">📋</div><div class="bottom-nav-label">編み図</div>
+  </div>
+</nav>
+
+<!-- ── Modal sheet ────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="sheet" id="modalSheet">
+    <div class="sheet-handle"></div>
+
+    <!-- FORM -->
+    <div id="formContent">
+      <div class="sheet-header">
+        <div class="sheet-title">New <em>Project</em></div>
+        <button class="btn-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="steps-row">
+        <div class="step-dot active" id="dot-0"></div>
+        <div class="step-dot" id="dot-1"></div>
+        <div class="step-dot" id="dot-2"></div>
+        <div class="step-dot" id="dot-3"></div>
+        <span class="step-label" id="stepLabel">基本情報</span>
+      </div>
+
+      <div class="form-step active" id="step-0">
+        <div class="field">
+          <label class="field-label">プロジェクト名（必須）</label>
+          <input class="field-input" id="f-name" type="text" placeholder="例：秋のケーブルマフラー" maxlength="40">
+          <div class="field-error" id="name-error">プロジェクト名は必須です</div>
+        </div>
+        <div class="field">
+          <label class="field-label">アイコンを選ぶ</label>
+          <div class="icon-grid">
+            <button class="icon-btn selected" data-icon="🧣" onclick="selectIcon(this)">🧣</button>
+            <button class="icon-btn" data-icon="🧤" onclick="selectIcon(this)">🧤</button>
+            <button class="icon-btn" data-icon="🧢" onclick="selectIcon(this)">🧢</button>
+            <button class="icon-btn" data-icon="🧥" onclick="selectIcon(this)">🧥</button>
+            <button class="icon-btn" data-icon="🧦" onclick="selectIcon(this)">🧦</button>
+            <button class="icon-btn" data-icon="👗" onclick="selectIcon(this)">👗</button>
+            <button class="icon-btn" data-icon="🪆" onclick="selectIcon(this)">🪆</button>
+            <button class="icon-btn" data-icon="🎀" onclick="selectIcon(this)">🎀</button>
+            <button class="icon-btn" data-icon="🛋️" onclick="selectIcon(this)">🛋️</button>
+            <button class="icon-btn" data-icon="🪴" onclick="selectIcon(this)">🪴</button>
+            <button class="icon-btn" data-icon="🐻" onclick="selectIcon(this)">🐻</button>
+            <button class="icon-btn" data-icon="✨" onclick="selectIcon(this)">✨</button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">テーマカラー</label>
+          <div class="color-grid">
+            <div class="color-btn selected" data-color="#b5634a" style="background:#b5634a" onclick="selectColor(this)"></div>
+            <div class="color-btn" data-color="#8a9e8c" style="background:#8a9e8c" onclick="selectColor(this)"></div>
+            <div class="color-btn" data-color="#6b8faf" style="background:#6b8faf" onclick="selectColor(this)"></div>
+            <div class="color-btn" data-color="#a07ab5" style="background:#a07ab5" onclick="selectColor(this)"></div>
+            <div class="color-btn" data-color="#c9a030" style="background:#c9a030" onclick="selectColor(this)"></div>
+            <div class="color-btn" data-color="#6b4535" style="background:#6b4535" onclick="selectColor(this)"></div>
+            <div class="color-btn" data-color="#d47a6a" style="background:#d47a6a" onclick="selectColor(this)"></div>
+            <div class="color-btn" data-color="#5a8a7a" style="background:#5a8a7a" onclick="selectColor(this)"></div>
+          </div>
+        </div>
+        <div class="form-nav">
+          <button class="btn-next" onclick="goStep(1)">次へ：針と段数 →</button>
+        </div>
+      </div>
+
+      <div class="form-step" id="step-1">
+        <div class="field">
+          <label class="field-label">針の種類</label>
+          <div class="needle-type-row">
+            <div class="needle-type-btn selected" id="ntype-bar" onclick="selectNeedleType('棒針')"><span class="needle-type-label">棒針</span></div>
+            <div class="needle-type-btn" id="ntype-crochet" onclick="selectNeedleType('かぎ針')"><span class="needle-type-label">かぎ針</span></div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" id="needle-size-label">号数・サイズ（棒針）</label>
+          <input class="field-input" id="f-needle-size" type="text" placeholder="例：6号、4.0mm">
+        </div>
+        <div class="field">
+          <label class="field-label">作り目の数</label>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="stepperChange('castOn',-2)">−</button>
+            <input class="stepper-val" id="castOn" type="number" value="40" min="1">
+            <button class="stepper-btn" onclick="stepperChange('castOn',2)">＋</button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">目標段数</label>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="stepperChange('targetRow',-5)">−</button>
+            <input class="stepper-val" id="targetRow" type="number" value="100" min="1">
+            <button class="stepper-btn" onclick="stepperChange('targetRow',5)">＋</button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">ゲージ（参考）</label>
+          <input class="field-input" id="f-gauge" type="text" placeholder="例：22目 × 30段">
+        </div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="goStep(0)">←</button>
+          <button class="btn-next" onclick="goStep(2)">次へ：使用糸 →</button>
+        </div>
+      </div>
+
+      <div class="form-step" id="step-2">
+        <div class="field">
+          <label class="field-label">使用糸</label>
+          <div id="yarnList">
+            <div class="yarn-entry" id="yarn-0">
+              <button class="yarn-delete" onclick="deleteYarn(0)">✕</button>
+              <div class="yarn-entry-row">
+                <input type="color" class="yarn-color-pick" value="#d4956a" id="yarnColor0">
+                <input class="field-input" style="margin:0" type="text" placeholder="糸の名前" id="yarnName0">
+              </div>
+              <div class="field-row" style="gap:8px">
+                <input class="field-input" type="text" placeholder="ブランド" id="yarnBrand0" style="flex:1">
+                <input class="field-input" type="text" placeholder="カラー名" id="yarnColorName0" style="flex:1">
+              </div>
+            </div>
+          </div>
+          <button class="btn-add-yarn" onclick="addYarnField()">＋ 糸を追加する</button>
+        </div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="goStep(1)">←</button>
+          <button class="btn-next" onclick="goStep(3)">次へ：メモ・確認 →</button>
+        </div>
+      </div>
+
+      <div class="form-step" id="step-3">
+        <div class="field">
+          <label class="field-label">編み図メモ（任意）</label>
+          <textarea class="field-input" id="f-notes" placeholder="段ごとの指示、特記事項など…"></textarea>
+        </div>
+        <div class="field">
+          <label class="field-label">プレビュー</label>
+          <div class="preview-card" id="previewCard">
+            <div class="preview-icon-name">
+              <span class="preview-icon" id="previewIcon">🧣</span>
+              <span class="preview-name" id="previewName">（プロジェクト名）</span>
+            </div>
+            <div class="preview-meta" id="previewMeta">—</div>
+            <div class="preview-progress-bar"><div class="preview-progress-fill" id="previewBar"></div></div>
+          </div>
+        </div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="goStep(2)">←</button>
+          <button class="btn-next" onclick="submitForm()">✦ プロジェクトを作成</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div id="successContent" style="display:none">
+      <div class="sheet-handle" style="visibility:hidden"></div>
+      <div class="success-content">
+        <div class="success-icon">🎉</div>
+        <div class="success-title">Project <em>Created!</em></div>
+        <div class="success-sub">プロジェクトが追加されました。<br>さっそく編み始めましょう！</div>
+        <div class="preview-card" id="successCard" style="width:100%">
+          <div class="preview-icon-name">
+            <span class="preview-icon" id="successIcon">🧣</span>
+            <span class="preview-name" id="successName">—</span>
+          </div>
+          <div class="preview-meta" id="successMeta">—</div>
+          <div class="preview-progress-bar"><div class="preview-progress-fill"></div></div>
+        </div>
+        <button class="btn-start" onclick="startCounting()">段数カウンターへ →</button>
+        <button class="btn-another" onclick="resetForm()">別のプロジェクトを追加</button>
+        <div style="height:20px"></div>
+      </div>
+    </div>
+
+    <!-- EDIT -->
+    <div id="editContent" style="display:none">
+      <div class="sheet-header">
+        <div class="sheet-title">Edit <em>Notes</em></div>
+        <button class="btn-close" onclick="closeModal()">✕</button>
+      </div>
+      <div style="padding:20px 28px 0">
+        <div class="field">
+          <label class="field-label">編み図メモ</label>
+          <textarea class="field-input" id="edit-notes" placeholder="段ごとの指示、特記事項など…" style="height:130px"></textarea>
+        </div>
+      </div>
+      <div style="padding:0 28px">
+        <label class="field-label" style="display:block;margin-bottom:8px">使用糸</label>
+        <div id="editYarnList"></div>
+        <button class="btn-add-yarn" onclick="addEditYarnField()">＋ 糸を追加する</button>
+      </div>
+      <div class="form-nav">
+        <button class="btn-back text" onclick="closeModal()">キャンセル</button>
+        <button class="btn-next" onclick="saveEdit()">✦ 保存する</button>
+      </div>
+      <div style="height:20px"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────
+let projects = JSON.parse(localStorage.getItem('knitnote_projects') || '[]');
+let activeProjectId = null;
+let formState = { icon:'🧣', color:'#b5634a', needleType:'棒針', currentStep:0 };
+let yarnFieldIdx = 1;
+const stepLabels = ['基本情報','針と段数','使用する糸','メモ・確認'];
+const colorPairs = {
+  '#b5634a':['#b5634a','#c9a090'], '#8a9e8c':['#8a9e8c','#c8d8c4'],
+  '#6b8faf':['#6b8faf','#a8c0d4'], '#a07ab5':['#a07ab5','#c8a8d8'],
+  '#c9a030':['#c9a030','#e0c878'], '#6b4535':['#6b4535','#b5634a'],
+  '#d47a6a':['#d47a6a','#e8b0a0'], '#5a8a7a':['#5a8a7a','#8ab8a8'],
+};
+const pageTitles = {
+  'page-home': 'My <em>Projects</em>',
+  'page-counter': 'Row <em>Counter</em>',
+  'page-pattern': 'Pattern <em>Notes</em>',
+};
+function save() { localStorage.setItem('knitnote_projects', JSON.stringify(projects)); }
+
+// ── Mobile menu ───────────────────────────────────────────────────────────
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('mobileMenuOverlay').classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('mobileMenuOverlay').classList.remove('open');
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('topBarTitle').innerHTML = pageTitles[id] || '';
+}
+function setSideNav(id) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  // sync bottom nav
+  const map = {'snav-home':'bnav-home','snav-counter':'bnav-counter','snav-pattern':'bnav-pattern'};
+  setBottomNav(map[id]);
+}
+function setBottomNav(id) {
+  document.querySelectorAll('.bottom-nav-item').forEach(n => n.classList.remove('active'));
+  if (id) document.getElementById(id)?.classList.add('active');
+  // sync sidebar
+  const map = {'bnav-home':'snav-home','bnav-counter':'snav-counter','bnav-pattern':'snav-pattern'};
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (map[id]) document.getElementById(map[id])?.classList.add('active');
+}
+
+// ── Home ──────────────────────────────────────────────────────────────────
+function renderHome() {
+  const active = projects.filter(p => p.status === 'active').length;
+  const done   = projects.filter(p => p.status === 'done').length;
+  const yarns  = new Set(projects.flatMap(p => (p.yarns||[]).map(y=>y.name).filter(Boolean))).size;
+  document.getElementById('stat-active').textContent = active;
+  document.getElementById('stat-done').textContent   = done;
+  document.getElementById('stat-yarn').textContent   = yarns;
+
+  const list = document.getElementById('projectList');
+  if (projects.length === 0) {
+    list.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-icon">🧶</div>
+      <p>まだプロジェクトがありません。<br>「＋ 新規プロジェクト」から追加しましょう！</p>
+      <button class="empty-cta" onclick="openModal()">＋ 新規プロジェクト</button>
+    </div>`;
+    return;
+  }
+  list.innerHTML = projects.map((p,i) => {
+    const pct = p.targetRow > 0 ? Math.min(100, Math.round(p.currentRow / p.targetRow * 100)) : 0;
+    const remaining = Math.max(0, p.targetRow - p.currentRow);
+    const [c1,c2] = colorPairs[p.color] || [p.color, p.color+'99'];
+    const yarn0 = p.yarns && p.yarns[0];
+    const yarnLabel = yarn0 ? `🧶 ${[yarn0.brand,yarn0.name,yarn0.colorName].filter(Boolean).join(' — ')}` : '糸情報なし';
+    const statusClass = p.status==='active'?'status-active':p.status==='done'?'status-done':'status-paused';
+    const statusLabel = p.status==='active'?'進行中':p.status==='done'?'完成':'一時停止';
+    return `<div class="project-card" style="--tc1:${c1};--tc2:${c2}" onclick="openProject(${i})">
+      <div class="project-top">
+        <span class="project-icon">${p.icon}</span>
+        <span class="project-status ${statusClass}">${statusLabel}</span>
+      </div>
+      <div class="project-name">${p.name}</div>
+      <div class="project-yarn">${yarnLabel}</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%;--tc1:${c1};--tc2:${c2}"></div></div>
+      <div class="project-bottom">
+        <span class="progress-text">${pct}%${remaining>0?` — あと${remaining}段`:' — 完成！'}</span>
+        <span class="row-badge">現在 ${p.currentRow}段目</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Counter ───────────────────────────────────────────────────────────────
+function renderCounterSelector() {
+  const sel = document.getElementById('counterSelector');
+  sel.innerHTML = projects.map((p,i) =>
+    `<div class="counter-chip${i===activeProjectId?' active':''}" onclick="openProject(${i})">${p.icon} ${p.name}</div>`
+  ).join('');
+}
+
+function openProject(idx) {
+  activeProjectId = idx;
+  const p = projects[idx];
+  showPage('page-counter');
+  setSideNav('snav-counter');
+  setBottomNav('bnav-counter');
+  renderCounterSelector();
+  const yarn0 = p.yarns && p.yarns[0];
+  const sub = yarn0 ? `🧶 ${[yarn0.brand,yarn0.name].filter(Boolean).join(' ')}` : `🪡 ${p.needle||'—'}`;
+  const [c1] = colorPairs[p.color]||[p.color];
+  document.getElementById('counterBody').innerHTML = `
+    <div class="counter-page-layout">
+      <div class="counter-left">
+        <div class="counter-circle">
+          <div class="counter-num" id="rowCount">${p.currentRow}</div>
+          <div class="counter-unit">ROW / 段</div>
+          <div class="counter-target-label" id="counter-target-label">目標 ${p.targetRow}段</div>
+        </div>
+        <div class="counter-btns">
+          <button class="btn-counter btn-minus" onclick="changeRow(-1)">−</button>
+          <button class="btn-counter btn-plus"  onclick="changeRow(1)">＋</button>
+        </div>
+        <div class="counter-progress">
+          <div class="counter-prog-bar"><div class="counter-prog-fill" id="rowProgBar"></div></div>
+          <div class="counter-prog-label"><span id="rowProgText"></span><span id="rowProgPct"></span></div>
+        </div>
+      </div>
+      <div class="counter-right">
+        <div class="counter-info-card">
+          <div class="counter-info-title">${p.icon} ${p.name}</div>
+          <div class="counter-info-sub">${sub}</div>
+        </div>
+        <div class="history-card">
+          <div class="history-title">最近の段</div>
+          <div class="history-grid" id="historyGrid"></div>
+        </div>
+      </div>
+    </div>`;
+  updateCounterUI(p.currentRow, p.targetRow);
+}
+
+function updateCounterUI(row, target) {
+  const el = document.getElementById('rowCount');
+  if (!el) return;
+  el.textContent = row;
+  const pct = target > 0 ? Math.min(100, row/target*100) : 0;
+  document.getElementById('rowProgBar').style.width = pct + '%';
+  document.getElementById('rowProgText').textContent = `${row} / ${target}段`;
+  document.getElementById('rowProgPct').textContent  = Math.round(pct) + '%';
+  renderHistory(row);
+}
+
+function changeRow(delta) {
+  if (activeProjectId === null) return;
+  const p = projects[activeProjectId];
+  p.currentRow = Math.max(0, p.currentRow + delta);
+  save(); renderHome();
+  const el = document.getElementById('rowCount');
+  el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+  updateCounterUI(p.currentRow, p.targetRow);
+}
+
+function renderHistory(row) {
+  const grid = document.getElementById('historyGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const start = Math.max(1, row - 19);
+  for (let i = start; i <= row; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'history-dot';
+    dot.textContent = i;
+    dot.style.background = i===row?'#b5634a':(i%8===1?'#6b4535':'#d4c8be');
+    dot.style.color = i===row||i%8===1?'white':'#9a8880';
+    grid.appendChild(dot);
+  }
+}
+
+// ── Pattern ───────────────────────────────────────────────────────────────
+let patternProjectIdx = 0;
+function renderPattern() {
+  const sel     = document.getElementById('patternSelector');
+  const content = document.getElementById('patternContent');
+  if (projects.length === 0) {
+    sel.innerHTML = '';
+    content.innerHTML = '<div class="pattern-empty">プロジェクトがまだありません。<br>ホームから追加してください。</div>';
+    return;
+  }
+  if (patternProjectIdx >= projects.length) patternProjectIdx = 0;
+  sel.innerHTML = projects.map((p,i) =>
+    `<div class="proj-chip${i===patternProjectIdx?' active':''}" onclick="selectPatternProject(${i})">${p.name}</div>`
+  ).join('') + `<div class="proj-chip" onclick="openModal()">＋ 追加</div>`;
+
+  const p = projects[patternProjectIdx];
+  const yarns = (p.yarns||[]).filter(y=>y.name);
+  content.innerHTML = `
+    <div class="pattern-layout">
+      <div>
+        <div class="needle-chips">
+          <div class="needle-chip"><div class="needle-chip-icon">🪡</div><div><div class="needle-chip-size">${p.needle||'—'}</div><div class="needle-chip-type">針</div></div></div>
+          <div class="needle-chip"><div class="needle-chip-icon">🔢</div><div><div class="needle-chip-size">作り目 ${p.castOn||'—'}目</div><div class="needle-chip-type">${p.gauge||'ゲージ未設定'}</div></div></div>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-card-head">
+            <div class="pattern-card-title">編み図メモ</div>
+            <span class="pattern-edit" onclick="openEditSheet(${patternProjectIdx})">編集 ✏️</span>
+          </div>
+          ${p.notes
+            ? `<div class="pattern-text" style="white-space:pre-wrap">${p.notes}</div>`
+            : `<div class="pattern-text" style="color:var(--muted);font-style:italic;cursor:pointer" onclick="openEditSheet(${patternProjectIdx})">クリックしてメモを追加…</div>`}
+        </div>
+      </div>
+      <div>
+        <div class="section-head" style="margin-bottom:12px">
+          <h2>使用糸</h2>
+          <span class="see-all" onclick="openEditSheet(${patternProjectIdx})">編集 ✏️</span>
+        </div>
+        <div class="yarn-list">
+          ${yarns.map(y=>`
+            <div class="yarn-card">
+              <div class="yarn-swatch" style="background:${y.color||'#d4c0b0'}">🧶</div>
+              <div class="yarn-info">
+                <div class="yarn-name">${y.name}</div>
+                <div class="yarn-detail">${[y.brand,y.colorName].filter(Boolean).join(' • ')||'—'}</div>
+              </div>
+            </div>`).join('')||`<div style="color:var(--muted);font-size:0.8rem;cursor:pointer" onclick="openEditSheet(${patternProjectIdx})">クリックして糸を追加…</div>`}
+        </div>
+      </div>
+    </div>`;
+}
+function selectPatternProject(i) { patternProjectIdx = i; renderPattern(); }
+
+// ── Modal ─────────────────────────────────────────────────────────────────
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  if (document.getElementById('editContent').style.display !== 'none') {
+    setTimeout(() => {
+      document.getElementById('editContent').style.display = 'none';
+      document.getElementById('formContent').style.display = 'block';
+    }, 400);
+  }
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// ── Form ──────────────────────────────────────────────────────────────────
+function goStep(n) {
+  if (n === 1 && !document.getElementById('f-name').value.trim()) {
+    document.getElementById('f-name').classList.add('error');
+    document.getElementById('name-error').classList.add('visible');
+    document.getElementById('f-name').focus();
+    return;
+  }
+  const prev = formState.currentStep;
+  document.getElementById(`step-${prev}`).classList.remove('active');
+  document.getElementById(`dot-${prev}`).classList.remove('active');
+  document.getElementById(`dot-${prev}`).classList.add('done');
+  formState.currentStep = n;
+  document.getElementById(`step-${n}`).classList.add('active');
+  document.getElementById(`dot-${n}`).classList.remove('done');
+  document.getElementById(`dot-${n}`).classList.add('active');
+  document.getElementById('stepLabel').textContent = stepLabels[n];
+  if (n === 3) updatePreview();
+  document.getElementById('modalSheet').scrollTo({ top:0, behavior:'smooth' });
+}
+function selectIcon(btn) {
+  document.querySelectorAll('.icon-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected'); formState.icon = btn.dataset.icon;
+}
+function selectColor(btn) {
+  document.querySelectorAll('.color-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected'); formState.color = btn.dataset.color;
+}
+function selectNeedleType(type) {
+  formState.needleType = type;
+  document.getElementById('ntype-bar').classList.toggle('selected', type==='棒針');
+  document.getElementById('ntype-crochet').classList.toggle('selected', type==='かぎ針');
+  document.getElementById('needle-size-label').textContent = type==='棒針'?'号数・サイズ（棒針）':'号数・サイズ（かぎ針）';
+  document.getElementById('f-needle-size').placeholder = type==='棒針'?'例：6号、4.0mm':'例：5/0号、3.0mm';
+}
+function stepperChange(id, delta) {
+  const el = document.getElementById(id);
+  el.value = Math.max(1, (parseInt(el.value)||0) + delta);
+}
+function addYarnField() {
+  const i = yarnFieldIdx++;
+  const div = document.createElement('div');
+  div.className='yarn-entry'; div.id=`yarn-${i}`;
+  div.innerHTML=`<button class="yarn-delete" onclick="deleteYarn(${i})">✕</button>
+    <div class="yarn-entry-row">
+      <input type="color" class="yarn-color-pick" value="#8a9e8c" id="yarnColor${i}">
+      <input class="field-input" style="margin:0" type="text" placeholder="糸の名前" id="yarnName${i}">
+    </div>
+    <div class="field-row" style="gap:8px">
+      <input class="field-input" type="text" placeholder="ブランド" id="yarnBrand${i}" style="flex:1">
+      <input class="field-input" type="text" placeholder="カラー名" id="yarnColorName${i}" style="flex:1">
+    </div>`;
+  document.getElementById('yarnList').appendChild(div);
+}
+function deleteYarn(i) {
+  if (document.querySelectorAll('.yarn-entry').length<=1) return;
+  document.getElementById(`yarn-${i}`)?.remove();
+}
+function collectYarns() {
+  return [...document.querySelectorAll('#yarnList .yarn-entry')].map(el=>{
+    const idx=el.id.replace('yarn-','');
+    return {
+      color: document.getElementById(`yarnColor${idx}`)?.value||'#d4956a',
+      name:  document.getElementById(`yarnName${idx}`)?.value.trim()||'',
+      brand: document.getElementById(`yarnBrand${idx}`)?.value.trim()||'',
+      colorName: document.getElementById(`yarnColorName${idx}`)?.value.trim()||'',
+    };
+  });
+}
+function updatePreview() {
+  const name   = document.getElementById('f-name').value.trim()||'（プロジェクト名）';
+  const needle = `${formState.needleType} ${document.getElementById('f-needle-size').value.trim()}`.trim();
+  const cast   = document.getElementById('castOn').value;
+  const target = document.getElementById('targetRow').value;
+  const gauge  = document.getElementById('f-gauge').value;
+  const yarns  = collectYarns();
+  const [c1,c2]= colorPairs[formState.color]||[formState.color,formState.color];
+  document.getElementById('previewIcon').textContent = formState.icon;
+  document.getElementById('previewName').textContent = name;
+  let meta = `🪡 ${needle}　🔢 作り目 ${cast}目　目標 ${target}段`;
+  if (gauge) meta += `\nゲージ: ${gauge}`;
+  if (yarns[0]?.name) meta += `\n🧶 ${yarns[0].name}`;
+  document.getElementById('previewMeta').textContent = meta;
+  document.getElementById('previewBar').style.background = `linear-gradient(90deg,${c1},${c2})`;
+  document.getElementById('previewCard').style.setProperty('--pc1',c1);
+  document.getElementById('previewCard').style.setProperty('--pc2',c2);
+}
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { goStep(0); return; }
+  const yarns = collectYarns();
+  const project = {
+    id: Date.now(), name, icon: formState.icon, color: formState.color,
+    needle: `${formState.needleType} ${document.getElementById('f-needle-size').value.trim()}`.trim(),
+    castOn: parseInt(document.getElementById('castOn').value)||40,
+    targetRow: parseInt(document.getElementById('targetRow').value)||100,
+    gauge: document.getElementById('f-gauge').value.trim(),
+    notes: document.getElementById('f-notes').value.trim(),
+    yarns, currentRow:0, status:'active', createdAt: new Date().toISOString(),
+  };
+  projects.push(project); save(); renderHome();
+  activeProjectId = projects.length - 1;
+  const [c1,c2] = colorPairs[project.color]||[project.color,project.color];
+  document.getElementById('successIcon').textContent = project.icon;
+  document.getElementById('successName').textContent = project.name;
+  const yarn0 = yarns[0];
+  document.getElementById('successMeta').textContent =
+    `🪡 ${project.needle}　目標 ${project.targetRow}段${yarn0?.name?'\n🧶 '+yarn0.name:''}`;
+  document.getElementById('successCard').style.setProperty('--pc1',c1);
+  document.getElementById('successCard').style.setProperty('--pc2',c2);
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('successContent').style.display = 'block';
+  document.getElementById('modalSheet').scrollTo({top:0,behavior:'smooth'});
+}
+function startCounting() { closeModal(); resetFormUI(); openProject(activeProjectId); }
+function resetForm() {
+  resetFormUI();
+  document.getElementById('successContent').style.display='none';
+  document.getElementById('formContent').style.display='block';
+}
+function resetFormUI() {
+  ['f-name','f-notes','f-gauge','f-needle-size'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('castOn').value=40;
+  document.getElementById('targetRow').value=100;
+  document.querySelectorAll('.form-step').forEach((s,i)=>s.classList.toggle('active',i===0));
+  document.querySelectorAll('.step-dot').forEach((d,i)=>{d.classList.remove('active','done');if(i===0)d.classList.add('active');});
+  formState={icon:'🧣',color:'#b5634a',needleType:'棒針',currentStep:0};
+  document.getElementById('stepLabel').textContent=stepLabels[0];
+  document.querySelectorAll('.icon-btn').forEach((b,i)=>b.classList.toggle('selected',i===0));
+  document.querySelectorAll('.color-btn').forEach((b,i)=>b.classList.toggle('selected',i===0));
+  document.getElementById('ntype-bar').classList.add('selected');
+  document.getElementById('ntype-crochet').classList.remove('selected');
+  document.getElementById('needle-size-label').textContent='号数・サイズ（棒針）';
+  document.getElementById('f-needle-size').placeholder='例：6号、4.0mm';
+  yarnFieldIdx=1;
+  document.getElementById('yarnList').innerHTML=`<div class="yarn-entry" id="yarn-0">
+    <button class="yarn-delete" onclick="deleteYarn(0)">✕</button>
+    <div class="yarn-entry-row">
+      <input type="color" class="yarn-color-pick" value="#d4956a" id="yarnColor0">
+      <input class="field-input" style="margin:0" type="text" placeholder="糸の名前" id="yarnName0">
+    </div>
+    <div class="field-row" style="gap:8px">
+      <input class="field-input" type="text" placeholder="ブランド" id="yarnBrand0" style="flex:1">
+      <input class="field-input" type="text" placeholder="カラー名" id="yarnColorName0" style="flex:1">
+    </div>
+  </div>`;
+}
+
+// ── Edit sheet ────────────────────────────────────────────────────────────
+let editYarnIdx = 0;
+function openEditSheet(idx) {
+  patternProjectIdx = idx;
+  const p = projects[idx];
+  document.getElementById('formContent').style.display='none';
+  document.getElementById('successContent').style.display='none';
+  document.getElementById('editContent').style.display='block';
+  document.getElementById('edit-notes').value = p.notes||'';
+  editYarnIdx=0;
+  const list = document.getElementById('editYarnList');
+  list.innerHTML='';
+  const yarns = (p.yarns&&p.yarns.length>0)?p.yarns:[{color:'#d4956a',name:'',brand:'',colorName:''}];
+  yarns.forEach(y=>appendEditYarnField(y));
+  openModal();
+}
+function appendEditYarnField(y) {
+  const i=editYarnIdx++;
+  const div=document.createElement('div');
+  div.className='yarn-entry'; div.id=`ey-${i}`;
+  div.innerHTML=`<button class="yarn-delete" onclick="removeEditYarn(${i})">✕</button>
+    <div class="yarn-entry-row">
+      <input type="color" class="yarn-color-pick" value="${y.color||'#d4956a'}" id="eyColor${i}">
+      <input class="field-input" style="margin:0" type="text" placeholder="糸の名前" id="eyName${i}" value="${y.name||''}">
+    </div>
+    <div class="field-row" style="gap:8px">
+      <input class="field-input" type="text" placeholder="ブランド" id="eyBrand${i}" value="${y.brand||''}" style="flex:1">
+      <input class="field-input" type="text" placeholder="カラー名" id="eyColorName${i}" value="${y.colorName||''}" style="flex:1">
+    </div>`;
+  document.getElementById('editYarnList').appendChild(div);
+}
+function addEditYarnField() { appendEditYarnField({color:'#8a9e8c',name:'',brand:'',colorName:''}); }
+function removeEditYarn(i) {
+  if (document.querySelectorAll('#editYarnList .yarn-entry').length<=1) return;
+  document.getElementById(`ey-${i}`)?.remove();
+}
+function saveEdit() {
+  const p = projects[patternProjectIdx];
+  p.notes = document.getElementById('edit-notes').value.trim();
+  p.yarns = [...document.querySelectorAll('#editYarnList .yarn-entry')].map(el=>{
+    const idx=el.id.replace('ey-','');
+    return {
+      color: document.getElementById(`eyColor${idx}`)?.value||'#d4956a',
+      name:  document.getElementById(`eyName${idx}`)?.value.trim()||'',
+      brand: document.getElementById(`eyBrand${idx}`)?.value.trim()||'',
+      colorName: document.getElementById(`eyColorName${idx}`)?.value.trim()||'',
+    };
+  });
+  save(); renderHome(); renderPattern();
+  closeModal();
+  document.getElementById('editContent').style.display='none';
+  document.getElementById('formContent').style.display='block';
+}
+
+// ── Validation ────────────────────────────────────────────────────────────
+document.getElementById('f-name').addEventListener('input', () => {
+  document.getElementById('f-name').classList.remove('error');
+  document.getElementById('name-error').classList.remove('visible');
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────
+renderHome();
+if (projects.length > 0) {
+  activeProjectId = 0;
+  renderCounterSelector();
+}
+</script>
+</body>
+</html>
