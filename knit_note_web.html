@@ -621,6 +621,21 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
   .page-content { padding: 24px; }
   .project-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Language toggle ─────────────────────────────────────────────────── */
+.lang-toggle {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--card); border: 1.5px solid var(--line);
+  border-radius: 20px; padding: 3px; flex-shrink: 0;
+}
+.lang-btn {
+  padding: 4px 12px; border-radius: 16px; border: none; background: none;
+  font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em;
+  color: var(--muted); cursor: pointer; transition: all 0.15s;
+}
+.lang-btn.active { background: var(--terracotta); color: white; }
+[data-lang="en"] .ja { display: none !important; }
+[data-lang="ja"] .en { display: none !important; }
 </style>
 
   <!-- ===== Google AdSense ===== -->
@@ -642,7 +657,7 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
   <aside class="sidebar">
     <div class="sidebar-logo">
       <div class="sidebar-logo-title">Knit<em>Note</em></div>
-      <div class="sidebar-logo-sub">編み物ノート</div>
+      <div class="sidebar-logo-sub"><span class="ja">編み物ノート</span><span class="en">Knitting Notebook</span></div>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-item active" id="snav-home" onclick="showPage('page-home');setSideNav('snav-home')">
@@ -681,7 +696,11 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
     <header class="top-bar">
       <div class="top-bar-title" id="topBarTitle">My <em>Projects</em></div>
       <div style="display:flex;gap:10px;align-items:center">
-        <button class="top-bar-btn" onclick="openModal()">＋ 新規プロジェクト</button>
+        <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="ja" onclick="setLang('ja')">JP</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+        <button class="top-bar-btn" onclick="openModal()"><span class="ja">＋ 新規プロジェクト</span><span class="en">＋ New Project</span></button>
         <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="メニュー">
           <span></span><span></span><span></span>
         </button>
@@ -760,13 +779,13 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
 <!-- Bottom nav (mobile) -->
 <nav class="bottom-nav">
   <div class="bottom-nav-item active" id="bnav-home" onclick="showPage('page-home');setBottomNav('bnav-home')">
-    <div class="bottom-nav-icon">🧶</div><div class="bottom-nav-label">プロジェクト</div>
+    <div class="bottom-nav-icon">🧶</div><div class="bottom-nav-label"><span class="ja">プロジェクト</span><span class="en">Projects</span></div>
   </div>
   <div class="bottom-nav-item" id="bnav-counter" onclick="showPage('page-counter');setBottomNav('bnav-counter')">
-    <div class="bottom-nav-icon">🔢</div><div class="bottom-nav-label">カウンター</div>
+    <div class="bottom-nav-icon">🔢</div><div class="bottom-nav-label"><span class="ja">カウンター</span><span class="en">Counter</span></div>
   </div>
   <div class="bottom-nav-item" id="bnav-pattern" onclick="showPage('page-pattern');setBottomNav('bnav-pattern');renderPattern()">
-    <div class="bottom-nav-icon">📋</div><div class="bottom-nav-label">編み図</div>
+    <div class="bottom-nav-icon">📋</div><div class="bottom-nav-label"><span class="ja">編み図</span><span class="en">Pattern</span></div>
   </div>
 </nav>
 
@@ -1426,6 +1445,25 @@ if (projects.length > 0) {
   activeProjectId = 0;
   renderCounterSelector();
 }
+</script>
+<script>
+// ── i18n ──────────────────────────────────────────────────────────────────
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  localStorage.setItem('knitnote_lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+(function() {
+  const saved = localStorage.getItem('knitnote_lang') || 'ja';
+  document.documentElement.setAttribute('data-lang', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === saved);
+    });
+  });
+})();
 </script>
 </body>
 </html>

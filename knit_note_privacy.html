@@ -167,6 +167,21 @@ footer {
   :root { --sidebar-w: 220px; }
   .content { padding: 36px 28px; }
 }
+
+/* ── Language toggle ─────────────────────────────────────────────────── */
+.lang-toggle {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--card); border: 1.5px solid var(--line);
+  border-radius: 20px; padding: 3px; flex-shrink: 0;
+}
+.lang-btn {
+  padding: 4px 12px; border-radius: 16px; border: none; background: none;
+  font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em;
+  color: var(--muted); cursor: pointer; transition: all 0.15s;
+}
+.lang-btn.active { background: var(--terracotta); color: white; }
+[data-lang="en"] .ja { display: none !important; }
+[data-lang="ja"] .en { display: none !important; }
 </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QYBKZ50H89"></script>
@@ -183,21 +198,21 @@ footer {
 <aside class="sidebar">
   <div class="sidebar-logo">
     <div class="sidebar-logo-title">Knit<em>Note</em></div>
-    <div class="sidebar-logo-sub">編み物ノート</div>
+    <div class="sidebar-logo-sub"><span class="ja">編み物ノート</span><span class="en">Knitting Notebook</span></div>
   </div>
   <nav class="sidebar-nav">
     <a class="nav-item" href="index.html">
-      <div class="nav-icon">🧶</div><span>アプリを使う</span>
+      <div class="nav-icon">🧶</div><span class="ja">アプリを使う</span><span class="en">Use App</span>
     </a>
     <a class="nav-item" href="knit_note_about.html">
-      <div class="nav-icon">📖</div><span>アプリについて</span>
+      <div class="nav-icon">📖</div><span class="ja"><span class="ja">アプリについて</span><span class="en">About</span></span><span class="en">About</span>
     </a>
     <a class="nav-item" href="knit_note_contact.html">
-      <div class="nav-icon">✉️</div><span>お問い合わせ</span>
+      <div class="nav-icon">✉️</div><span class="ja"><span class="ja">お問い合わせ</span><span class="en">Contact</span></span><span class="en">Contact</span>
     </a>
     <div class="sidebar-divider"></div>
     <a class="nav-item active" href="knit_note_privacy.html">
-      <div class="nav-icon">📄</div><span>プライバシーポリシー</span>
+      <div class="nav-icon">📄</div><span class="ja"><span class="ja">プライバシーポリシー</span><span class="en">Privacy Policy</span></span><span class="en">Privacy Policy</span>
     </a>
   </nav>
   <div class="sidebar-footer">KNITNOTE © 2026</div>
@@ -207,76 +222,80 @@ footer {
   <!-- Top bar -->
   <header class="top-bar">
     <div class="top-bar-title">Privacy <em>Policy</em></div>
-    <a class="top-bar-cta" href="index.html">アプリを使う →</a>
+    <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="ja" onclick="setLang('ja')">JP</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+      <a class="top-bar-cta" href="index.html"><span class="ja">アプリを使う →</span><span class="en">Try the App →</span></a>
   </header>
 
   <!-- Page header -->
   <section class="page-header">
     <div class="page-header-label">Privacy Policy</div>
-    <h1 class="page-header-title">プライバシー<br><em>ポリシー</em></h1>
-    <div class="page-header-date">最終更新日：2026年3月22日</div>
+    <h1 class="page-header-title"><span class="ja">プライバシー<br><em>ポリシー</em></span><span class="en">Privacy<br><em>Policy</em></span></h1>
+    <div class="page-header-date"><span class="ja">最終更新日：2026年3月22日</span><span class="en">Last updated: March 22, 2026</span></div>
   </section>
 
   <!-- Content -->
   <div class="content">
 
     <div class="policy-intro">
-      <p>KnitNote（以下「本サービス」）は、ユーザーのプライバシーを尊重し、個人情報の保護に努めます。本ポリシーは、本サービスにおける情報の取り扱いについて説明するものです。</p>
+      <p><span class="ja">KnitNote（以下「本サービス」）は、ユーザーのプライバシーを尊重し、個人情報の保護に努めます。本ポリシーは、本サービスにおける情報の取り扱いについて説明するものです。</span><span class="en">KnitNote ("the Service") respects your privacy and is committed to protecting your personal information. This policy explains how information is handled within the Service.</span></p>
     </div>
 
     <div class="policy-section">
-      <h2>1. 収集する情報</h2>
-      <p>本サービスは、ユーザーが入力したプロジェクト情報（プロジェクト名・段数・糸情報・メモ等）をお使いのブラウザのローカルストレージに保存します。これらのデータは端末内にのみ保存され、外部サーバーへの送信は行いません。</p>
-      <p>また、本サービスではGoogle AdSenseによる広告を表示しており、Googleが以下の情報を収集する場合があります：</p>
+      <h2><span class="ja">1. 収集する情報</span><span class="en">1. Information We Collect</span></h2>
+      <p><span class="ja">本サービスは、ユーザーが入力したプロジェクト情報（プロジェクト名・段数・糸情報・メモ等）をお使いのブラウザのローカルストレージに保存します。これらのデータは端末内にのみ保存され、外部サーバーへの送信は行いません。</span><span class="en">The Service saves project data (name, row count, yarn info, notes, etc.) to your browser's local storage. This data stays on your device and is never sent to external servers.</span></p>
+      <p><span class="ja">また、本サービスではGoogle AdSenseによる広告を表示しており、Googleが以下の情報を収集する場合があります：</span><span class="en">The Service displays ads via Google AdSense. Google may collect the following information:</span></p>
       <ul>
-        <li>Cookieを使用したブラウザ情報</li>
-        <li>IPアドレス</li>
-        <li>ページの閲覧履歴・行動情報</li>
+        <li><span class="ja">Cookieを使用したブラウザ情報</span><span class="en">Browser information via cookies</span></li>
+        <li><span class="ja">IPアドレス</span><span class="en">IP address</span></li>
+        <li><span class="ja">ページの閲覧履歴・行動情報</span><span class="en">Browsing history and behavioral data</span></li>
       </ul>
     </div>
 
     <div class="policy-section">
-      <h2>2. 情報の利用目的</h2>
-      <p>収集した情報は以下の目的で利用します：</p>
+      <h2><span class="ja">2. 情報の利用目的</span><span class="en">2. How We Use Information</span></h2>
+      <p><span class="ja">収集した情報は以下の目的で利用します：</span><span class="en">Collected information is used for the following purposes:</span></p>
       <ul>
-        <li>本サービスの提供・改善</li>
-        <li>Google AdSenseによる広告配信の最適化</li>
-        <li>サービスの利用状況の分析</li>
+        <li><span class="ja">本サービスの提供・改善</span><span class="en">Providing and improving the Service</span></li>
+        <li><span class="ja">Google AdSenseによる広告配信の最適化</span><span class="en">Optimizing ad delivery via Google AdSense</span></li>
+        <li><span class="ja">サービスの利用状況の分析</span><span class="en">Analyzing usage of the Service</span></li>
       </ul>
     </div>
 
     <div class="policy-section">
-      <h2>3. Google AdSenseについて</h2>
-      <p>本サービスはGoogle AdSenseを利用した広告を掲載しています。Google AdSenseはCookieを使用して、ユーザーの興味・関心に基づいた広告を表示します。</p>
+      <h2><span class="ja">3. Google AdSenseについて</span><span class="en">3. Google AdSense</span></h2>
+      <p><span class="ja">本サービスはGoogle AdSenseを利用した広告を掲載しています。Google AdSenseはCookieを使用して、ユーザーの興味・関心に基づいた広告を表示します。</span><span class="en">This Service displays ads using Google AdSense. AdSense uses cookies to show ads based on your interests.</span></p>
       <p>Googleによるデータの利用については、<a href="https://policies.google.com/technologies/ads" target="_blank" style="color:var(--terracotta)">Googleのポリシーと規約</a>をご確認ください。</p>
       <p>広告のパーソナライズはブラウザの設定や<a href="https://www.google.com/settings/ads" target="_blank" style="color:var(--terracotta)">Googleの広告設定</a>から無効にすることができます。</p>
     </div>
 
     <div class="policy-section">
-      <h2>4. Cookieについて</h2>
-      <p>本サービスは、サービスの利便性向上および広告配信のためにCookieを使用します。ブラウザの設定からCookieを無効にすることができますが、一部機能が正常に動作しない場合があります。</p>
+      <h2><span class="ja">4. Cookieについて</span><span class="en">4. Cookies</span></h2>
+      <p><span class="ja">本サービスは、サービスの利便性向上および広告配信のためにCookieを使用します。ブラウザの設定からCookieを無効にすることができますが、一部機能が正常に動作しない場合があります。</span><span class="en">The Service uses cookies to improve usability and deliver ads. You may disable cookies in your browser settings, though some features may not work properly.</span></p>
     </div>
 
     <div class="policy-section">
-      <h2>5. 第三者への情報提供</h2>
-      <p>本サービスは、法令に基づく場合を除き、ユーザーの個人情報を第三者に提供・開示することはありません。ただし、Google AdSenseの広告配信のため、Googleに情報が提供される場合があります。</p>
+      <h2><span class="ja">5. 第三者への情報提供</span><span class="en">5. Sharing with Third Parties</span></h2>
+      <p><span class="ja">本サービスは、法令に基づく場合を除き、ユーザーの個人情報を第三者に提供・開示することはありません。ただし、Google AdSenseの広告配信のため、Googleに情報が提供される場合があります。</span><span class="en">We do not share or disclose personal information to third parties except as required by law. However, information may be shared with Google for ad delivery via AdSense.</span></p>
     </div>
 
     <div class="policy-section">
-      <h2>6. データの保管と削除</h2>
-      <p>本サービスに入力されたデータはお使いの端末のブラウザ（ローカルストレージ）にのみ保存されます。データを削除するにはブラウザのキャッシュ・サイトデータを消去してください。</p>
+      <h2><span class="ja">6. データの保管と削除</span><span class="en">6. Data Storage & Deletion</span></h2>
+      <p><span class="ja">本サービスに入力されたデータはお使いの端末のブラウザ（ローカルストレージ）にのみ保存されます。データを削除するにはブラウザのキャッシュ・サイトデータを消去してください。</span><span class="en">All data entered in the Service is stored only in your browser's local storage. To delete it, clear your browser's cache and site data.</span></p>
     </div>
 
     <div class="policy-section">
-      <h2>7. プライバシーポリシーの変更</h2>
-      <p>本ポリシーは必要に応じて改訂することがあります。重要な変更がある場合は本ページにて告知します。定期的にご確認いただくことをお勧めします。</p>
+      <h2><span class="ja">7. プライバシーポリシーの変更</span><span class="en">7. Changes to This Policy</span></h2>
+      <p><span class="ja">本ポリシーは必要に応じて改訂することがあります。重要な変更がある場合は本ページにて告知します。定期的にご確認いただくことをお勧めします。</span><span class="en">This policy may be revised as needed. Significant changes will be announced on this page. We recommend checking periodically.</span></p>
     </div>
 
     <div class="policy-section">
-      <h2>8. お問い合わせ</h2>
-      <p>プライバシーポリシーに関するご質問・ご意見は、お問い合わせページよりご連絡ください。</p>
+      <h2><span class="ja">8. お問い合わせ</span><span class="en">8. Contact</span></h2>
+      <p><span class="ja">プライバシーポリシーに関するご質問・ご意見は、お問い合わせページよりご連絡ください。</span><span class="en">For any questions or comments about this policy, please use the contact page.</span></p>
       <div class="contact-box">
-        <p>お問い合わせは<a href="knit_note_contact.html">お問い合わせページ</a>からお願いします。</p>
+        <p>お問い合わせは<a href="knit_note_contact.html"><span class="ja">お問い合わせページ</span><span class="en">contact page</span></a>からお願いします。</p>
       </div>
     </div>
 
@@ -298,10 +317,10 @@ footer {
   <footer>
     <div class="footer-logo">Knit<em>Note</em></div>
     <div class="footer-links">
-      <a class="footer-link" href="index.html">アプリ</a>
-      <a class="footer-link" href="knit_note_about.html">アプリについて</a>
-      <a class="footer-link" href="knit_note_contact.html">お問い合わせ</a>
-      <a class="footer-link" href="knit_note_privacy.html">プライバシーポリシー</a>
+      <a class="footer-link" href="index.html"><span class="ja">アプリ</span><span class="en">App</span></a>
+      <a class="footer-link" href="knit_note_about.html"><span class="ja">アプリについて</span><span class="en">About</span></a>
+      <a class="footer-link" href="knit_note_contact.html"><span class="ja">お問い合わせ</span><span class="en">Contact</span></a>
+      <a class="footer-link" href="knit_note_privacy.html"><span class="ja">プライバシーポリシー</span><span class="en">Privacy Policy</span></a>
     </div>
     <div class="footer-copy">© 2026 KNITNOTE</div>
   </footer>
@@ -310,19 +329,38 @@ footer {
 <!-- Bottom nav (mobile) -->
 <nav class="bottom-nav">
   <a class="bottom-nav-item" href="index.html">
-    <div class="bottom-nav-icon">🧶</div><div class="bottom-nav-label">アプリ</div>
+    <div class="bottom-nav-icon">🧶</div><div class="bottom-nav-label"><span class="ja">アプリ</span><span class="en">App</span></div>
   </a>
   <a class="bottom-nav-item" href="knit_note_about.html">
-    <div class="bottom-nav-icon">📖</div><div class="bottom-nav-label">アプリについて</div>
+    <div class="bottom-nav-icon">📖</div><div class="bottom-nav-label"><span class="ja">アプリについて</span><span class="en">About</span></div>
   </a>
   <a class="bottom-nav-item" href="knit_note_contact.html">
-    <div class="bottom-nav-icon">✉️</div><div class="bottom-nav-label">お問い合わせ</div>
+    <div class="bottom-nav-icon">✉️</div><div class="bottom-nav-label"><span class="ja">お問い合わせ</span><span class="en">Contact</span></div>
   </a>
   <a class="bottom-nav-item active" href="knit_note_privacy.html">
     <div class="bottom-nav-icon" style="background:var(--terracotta)">📄</div>
-    <div class="bottom-nav-label" style="color:var(--terracotta);font-weight:700">ポリシー</div>
+    <div class="bottom-nav-label" style="color:var(--terracotta);font-weight:700"><span class="ja">ポリシー</span><span class="en">Policy</span></div>
   </a>
 </nav>
 
+<script>
+// ── i18n ──────────────────────────────────────────────────────────────────
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  localStorage.setItem('knitnote_lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+(function() {
+  const saved = localStorage.getItem('knitnote_lang') || 'ja';
+  document.documentElement.setAttribute('data-lang', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === saved);
+    });
+  });
+})();
+</script>
 </body>
 </html>

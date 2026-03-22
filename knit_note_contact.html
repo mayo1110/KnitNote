@@ -204,6 +204,21 @@ footer {
   margin-bottom: 6px;
 }
 
+
+/* ── Language toggle ─────────────────────────────────────────────────── */
+.lang-toggle {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--card); border: 1.5px solid var(--line);
+  border-radius: 20px; padding: 3px; flex-shrink: 0;
+}
+.lang-btn {
+  padding: 4px 12px; border-radius: 16px; border: none; background: none;
+  font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em;
+  color: var(--muted); cursor: pointer; transition: all 0.15s;
+}
+.lang-btn.active { background: var(--terracotta); color: white; }
+[data-lang="en"] .ja { display: none !important; }
+[data-lang="ja"] .en { display: none !important; }
 </style>
 
   <!-- ===== Google AdSense ===== -->
@@ -224,21 +239,21 @@ footer {
 <aside class="sidebar">
   <div class="sidebar-logo">
     <div class="sidebar-logo-title">Knit<em>Note</em></div>
-    <div class="sidebar-logo-sub">編み物ノート</div>
+    <div class="sidebar-logo-sub"><span class="ja">編み物ノート</span><span class="en">Knitting Notebook</span></div>
   </div>
   <nav class="sidebar-nav">
     <a class="nav-item" href="knit_note_web.html">
-      <div class="nav-icon">🧶</div><span>アプリを使う</span>
+      <div class="nav-icon">🧶</div><span class="ja">アプリを使う</span><span class="en">Use App</span>
     </a>
     <a class="nav-item" href="knit_note_about.html">
-      <div class="nav-icon">📖</div><span>アプリについて</span>
+      <div class="nav-icon">📖</div><span class="ja"><span class="ja">アプリについて</span><span class="en">About</span></span><span class="en">About</span>
     </a>
     <a class="nav-item active" href="knit_note_contact.html">
-      <div class="nav-icon">✉️</div><span>お問い合わせ</span>
+      <div class="nav-icon">✉️</div><span class="ja"><span class="ja">お問い合わせ</span><span class="en">Contact</span></span><span class="en">Contact</span>
     </a>
     <div class="sidebar-divider"></div>
     <a class="nav-item" href="knit_note_privacy.html">
-      <div class="nav-icon">📄</div><span>プライバシーポリシー</span>
+      <div class="nav-icon">📄</div><span class="ja"><span class="ja">プライバシーポリシー</span><span class="en">Privacy Policy</span></span><span class="en">Privacy Policy</span>
     </a>
   </nav>
   <div class="sidebar-footer">KNITNOTE © 2026</div>
@@ -248,14 +263,18 @@ footer {
   <!-- Top bar -->
   <header class="top-bar">
     <div class="top-bar-title">Contact <em>Us</em></div>
-    <a class="top-bar-cta" href="knit_note_web.html">アプリを使う →</a>
+    <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="ja" onclick="setLang('ja')">JP</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+      <a class="top-bar-cta" href="knit_note_web.html"><span class="ja">アプリを使う →</span><span class="en">Try the App →</span></a>
   </header>
 
   <!-- Page header -->
   <section class="page-header">
     <div class="page-header-label">Contact</div>
-    <h1 class="page-header-title">お気軽に<br><em>ご連絡ください。</em></h1>
-    <p class="page-header-desc">機能のご要望・不具合のご報告・ご意見・ご感想など、どんなことでもお待ちしています。</p>
+    <h1 class="page-header-title"><span class="ja">お気軽に<br><em>ご連絡ください。</em></span><span class="en">We'd love to<br><em>hear from you.</em></span></h1>
+    <p class="page-header-desc"><span class="ja">機能のご要望・不具合のご報告・ご意見・ご感想など、どんなことでもお待ちしています。</span><span class="en">Feature requests, bug reports, feedback — we welcome any and all messages.</span></p>
   </section>
 
   <!-- Content -->
@@ -263,44 +282,44 @@ footer {
 
       <!-- お問い合わせについて -->
       <div class="info-card" style="margin-bottom:16px">
-        <div class="info-card-title">お問い合わせについて</div>
+        <div class="info-card-title"><span class="ja">お問い合わせについて</span><span class="en">About Inquiries</span></div>
         <div class="info-item">
           <div class="info-item-icon">⏱️</div>
           <div class="info-item-body">
-            <div class="info-item-label">返信について</div>
-            <div class="info-item-text">いただいたメッセージは確認後、できる限りご返信いたします。内容によってはお時間をいただく場合があります。</div>
+            <div class="info-item-label"><span class="ja">返信について</span><span class="en">Response Time</span></div>
+            <div class="info-item-text"><span class="ja">いただいたメッセージは確認後、できる限りご返信いたします。内容によってはお時間をいただく場合があります。</span><span class="en">We review all messages and reply as promptly as possible. Some inquiries may take more time.</span></div>
           </div>
         </div>
         <div class="info-item">
           <div class="info-item-icon">💡</div>
           <div class="info-item-body">
-            <div class="info-item-label">機能要望について</div>
-            <div class="info-item-text">いただいたご要望はすべて拝見しています。開発の参考にさせていただきます。</div>
+            <div class="info-item-label"><span class="ja">機能要望について</span><span class="en">Feature Requests</span></div>
+            <div class="info-item-text"><span class="ja">いただいたご要望はすべて拝見しています。開発の参考にさせていただきます。</span><span class="en">We read every request. Your ideas help guide future development.</span></div>
           </div>
         </div>
         <div class="info-item">
           <div class="info-item-icon">🐛</div>
           <div class="info-item-body">
-            <div class="info-item-label">不具合報告について</div>
-            <div class="info-item-text">お使いのブラウザ・OS・発生状況をできるだけ詳しく教えていただけると助かります。</div>
+            <div class="info-item-label"><span class="ja">不具合報告について</span><span class="en">Bug Reports</span></div>
+            <div class="info-item-text"><span class="ja">お使いのブラウザ・OS・発生状況をできるだけ詳しく教えていただけると助かります。</span><span class="en">Please include your browser, OS, and a description of the issue to help us investigate.</span></div>
           </div>
         </div>
       </div>
 
       <!-- よくある質問 -->
       <div class="info-card" style="margin-bottom:32px">
-        <div class="info-card-title">よくある質問</div>
+        <div class="info-card-title"><span class="ja">よくある質問</span><span class="en">FAQ</span></div>
         <div class="faq-item">
-          <div class="faq-q">データが消えてしまいました</div>
-          <div class="faq-a">ブラウザのキャッシュ削除やプライベートモードでのご利用によりデータが削除される場合があります。現在はローカル保存のみのため、ご注意ください。</div>
+          <div class="faq-q"><span class="ja">データが消えてしまいました</span><span class="en">My data disappeared</span></div>
+          <div class="faq-a"><span class="ja">ブラウザのキャッシュ削除やプライベートモードでのご利用によりデータが削除される場合があります。現在はローカル保存のみのため、ご注意ください。</span><span class="en">Data may be deleted if you clear your browser cache or use private/incognito mode. Data is stored locally only.</span></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">スマホとPCでデータを共有したい</div>
-          <div class="faq-a">現在は同一ブラウザ内のみの保存となっています。クラウド同期機能は今後対応予定です。</div>
+          <div class="faq-q"><span class="ja">スマホとPCでデータを共有したい</span><span class="en">Can I sync across devices?</span></div>
+          <div class="faq-a"><span class="ja">現在は同一ブラウザ内のみの保存となっています。クラウド同期機能は今後対応予定です。</span><span class="en">Currently data is saved within the same browser only. Cloud sync is planned for a future update.</span></div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">無料で使えますか？</div>
-          <div class="faq-a">はい、KnitNote は現在すべての機能を無料でご利用いただけます。</div>
+          <div class="faq-q"><span class="ja">無料で使えますか？</span><span class="en">Is it free to use?</span></div>
+          <div class="faq-a"><span class="ja">はい、KnitNote は現在すべての機能を無料でご利用いただけます。</span><span class="en">Yes, all features of KnitNote are currently free to use.</span></div>
         </div>
       </div>
 
@@ -336,10 +355,10 @@ footer {
   <footer>
     <div class="footer-logo">Knit<em>Note</em></div>
     <div class="footer-links">
-      <a class="footer-link" href="knit_note_web.html">アプリ</a>
-      <a class="footer-link" href="knit_note_about.html">アプリについて</a>
-      <a class="footer-link" href="knit_note_contact.html">お問い合わせ</a>
-      <a class="footer-link" href="knit_note_privacy.html">プライバシーポリシー</a>
+      <a class="footer-link" href="knit_note_web.html"><span class="ja">アプリ</span><span class="en">App</span></a>
+      <a class="footer-link" href="knit_note_about.html"><span class="ja">アプリについて</span><span class="en">About</span></a>
+      <a class="footer-link" href="knit_note_contact.html"><span class="ja">お問い合わせ</span><span class="en">Contact</span></a>
+      <a class="footer-link" href="knit_note_privacy.html"><span class="ja">プライバシーポリシー</span><span class="en">Privacy Policy</span></a>
     </div>
     <div class="footer-copy">© 2026 KNITNOTE</div>
   </footer>
@@ -348,18 +367,37 @@ footer {
 <!-- Bottom nav (mobile) -->
 <nav class="bottom-nav">
   <a class="bottom-nav-item" href="knit_note_web.html">
-    <div class="bottom-nav-icon">🧶</div><div class="bottom-nav-label">アプリ</div>
+    <div class="bottom-nav-icon">🧶</div><div class="bottom-nav-label"><span class="ja">アプリ</span><span class="en">App</span></div>
   </a>
   <a class="bottom-nav-item" href="knit_note_about.html">
-    <div class="bottom-nav-icon">📖</div><div class="bottom-nav-label">アプリについて</div>
+    <div class="bottom-nav-icon">📖</div><div class="bottom-nav-label"><span class="ja">アプリについて</span><span class="en">About</span></div>
   </a>
   <a class="bottom-nav-item active" href="knit_note_contact.html">
     <div class="bottom-nav-icon" style="background:var(--terracotta)">✉️</div>
-    <div class="bottom-nav-label" style="color:var(--terracotta);font-weight:700">お問い合わせ</div>
+    <div class="bottom-nav-label" style="color:var(--terracotta);font-weight:700"><span class="ja">お問い合わせ</span><span class="en">Contact</span></div>
   </a>
 </nav>
 
 <script>
+</script>
+<script>
+// ── i18n ──────────────────────────────────────────────────────────────────
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  localStorage.setItem('knitnote_lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+(function() {
+  const saved = localStorage.getItem('knitnote_lang') || 'ja';
+  document.documentElement.setAttribute('data-lang', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === saved);
+    });
+  });
+})();
 </script>
 </body>
 </html>

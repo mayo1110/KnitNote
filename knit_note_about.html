@@ -222,6 +222,21 @@ footer {
   margin-bottom: 6px;
 }
 
+
+/* ── Language toggle ─────────────────────────────────────────────────── */
+.lang-toggle {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--card); border: 1.5px solid var(--line);
+  border-radius: 20px; padding: 3px; flex-shrink: 0;
+}
+.lang-btn {
+  padding: 4px 12px; border-radius: 16px; border: none; background: none;
+  font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em;
+  color: var(--muted); cursor: pointer; transition: all 0.15s;
+}
+.lang-btn.active { background: var(--terracotta); color: white; }
+[data-lang="en"] .ja { display: none !important; }
+[data-lang="ja"] .en { display: none !important; }
 </style>
 
   <!-- ===== Google AdSense ===== -->
@@ -242,20 +257,20 @@ footer {
 <aside class="sidebar">
   <div class="sidebar-logo">
     <div class="sidebar-logo-title">Knit<em>Note</em></div>
-    <div class="sidebar-logo-sub">編み物ノート</div>
+    <div class="sidebar-logo-sub"><span class="ja">編み物ノート</span><span class="en">Knitting Notebook</span></div>
   </div>
   <nav class="sidebar-nav">
     <a class="nav-item" href="knit_note_web.html">
-      <div class="nav-icon">🧶</div><span>アプリを使う</span>
+      <div class="nav-icon">🧶</div><span class="ja">アプリを使う</span><span class="en">Use App</span>
     </a>
     <a class="nav-item active" href="knit_note_about.html">
-      <div class="nav-icon">📖</div><span>アプリについて</span>
+      <div class="nav-icon">📖</div><span class="ja"><span class="ja">アプリについて</span><span class="en">About</span></span><span class="en">About</span>
     </a>
     <a class="nav-item" href="knit_note_contact.html">
-      <div class="nav-icon">✉️</div><span>お問い合わせ</span>
+      <div class="nav-icon">✉️</div><span class="ja"><span class="ja">お問い合わせ</span><span class="en">Contact</span></span><span class="en">Contact</span>
     </a>
     <a class="nav-item" href="knit_note_privacy.html">
-      <div class="nav-icon">📄</div><span>プライバシーポリシー</span>
+      <div class="nav-icon">📄</div><span class="ja"><span class="ja">プライバシーポリシー</span><span class="en">Privacy Policy</span></span><span class="en">Privacy Policy</span>
     </a>
   </nav>
   <div class="sidebar-footer">KNITNOTE © 2026</div>
@@ -265,40 +280,44 @@ footer {
   <!-- Top bar -->
   <header class="top-bar">
     <div class="top-bar-title">About <em>KnitNote</em></div>
-    <a class="top-bar-cta" href="knit_note_web.html">アプリを使う →</a>
+    <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="ja" onclick="setLang('ja')">JP</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+      <a class="top-bar-cta" href="knit_note_web.html"><span class="ja">アプリを使う →</span><span class="en">Try the App →</span></a>
   </header>
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-label">KnitNote — 編み物ノート</div>
-    <h1 class="hero-title">編み物をもっと<br><em>丁寧に、楽しく。</em></h1>
-    <p class="hero-desc">プロジェクトの管理から段数カウント、編み図メモまで。編み物に必要なすべてをひとつにまとめたノートアプリです。</p>
+    <div class="hero-label"><span class="ja">KnitNote — 編み物ノート</span><span class="en">KnitNote — Knitting Notebook</span></div>
+    <h1 class="hero-title"><span class="ja">編み物をもっと<br><em>丁寧に、楽しく。</em></span><span class="en">Knit smarter,<br><em>not harder.</em></span></h1>
+    <p class="hero-desc"><span class="ja">プロジェクトの管理から段数カウント、編み図メモまで。編み物に必要なすべてをひとつにまとめたノートアプリです。</span><span class="en">From project management to row counting and pattern notes — everything you need for knitting in one place.</span></p>
     <div class="hero-btns">
-      <a class="btn-primary" href="knit_note_web.html">無料で使ってみる →</a>
-      <a class="btn-secondary" href="#features">機能を見る</a>
+      <a class="btn-primary" href="knit_note_web.html"><span class="ja">無料で使ってみる →</span><span class="en">Try for Free →</span></a>
+      <a class="btn-secondary" href="#features"><span class="ja">機能を見る</span><span class="en">See Features</span></a>
     </div>
   </section>
 
   <!-- Features -->
   <section class="section" id="features">
     <div class="section-label">Features</div>
-    <h2 class="section-title">3つの<em>主要機能</em></h2>
-    <p class="section-desc">編み物の「困った」を解決するために設計された、シンプルで使いやすい3つの機能。</p>
+    <h2 class="section-title"><span class="ja">3つの<em>主要機能</em></span><span class="en">3 Core <em>Features</em></span></h2>
+    <p class="section-desc"><span class="ja">編み物の「困った」を解決するために設計された、シンプルで使いやすい3つの機能。</span><span class="en">Three simple, powerful features designed to solve every knitter's frustrations.</span></p>
     <div class="feature-grid">
       <div class="feature-card" style="--tc1:#b5634a;--tc2:#c9a090">
         <div class="feature-icon">🧶</div>
-        <div class="feature-title">プロジェクト管理</div>
-        <div class="feature-desc">進行中・完成・一時停止のステータス管理。使用する糸・針・目標段数をプロジェクトごとに記録。進捗バーで一目でわかります。</div>
+        <div class="feature-title"><span class="ja">プロジェクト管理</span><span class="en">Project Management</span></div>
+        <div class="feature-desc"><span class="ja">進行中・完成・一時停止のステータス管理。使用する糸・針・目標段数をプロジェクトごとに記録。進捗バーで一目でわかります。</span><span class="en">Track status (active, paused, done). Record yarn, needles, and target rows per project with a visual progress bar.</span></div>
       </div>
       <div class="feature-card" style="--tc1:#8a9e8c;--tc2:#c8d8c4">
         <div class="feature-icon">🔢</div>
-        <div class="feature-title">段数カウンター</div>
-        <div class="feature-desc">大きな数字で現在の段数を表示。ボタンひとつで増減でき、目標段数までの進捗もリアルタイムで確認できます。</div>
+        <div class="feature-title"><span class="ja">段数カウンター</span><span class="en">Row Counter</span></div>
+        <div class="feature-desc"><span class="ja">大きな数字で現在の段数を表示。ボタンひとつで増減でき、目標段数までの進捗もリアルタイムで確認できます。</span><span class="en">Display your current row in large digits. Tap + or − and track progress to your target row in real time.</span></div>
       </div>
       <div class="feature-card" style="--tc1:#6b8faf;--tc2:#a8c0d4">
         <div class="feature-icon">📋</div>
-        <div class="feature-title">編み図メモ</div>
-        <div class="feature-desc">パターンの指示や特記事項を自由にメモ。使用糸の情報（ブランド・カラー）も一緒に記録して、いつでも参照できます。</div>
+        <div class="feature-title"><span class="ja">編み図メモ</span><span class="en">Pattern Notes</span></div>
+        <div class="feature-desc"><span class="ja">パターンの指示や特記事項を自由にメモ。使用糸の情報（ブランド・カラー）も一緒に記録して、いつでも参照できます。</span><span class="en">Jot down pattern instructions and notes. Record yarn details (brand and color) for easy reference anytime.</span></div>
       </div>
     </div>
   </section>
@@ -308,35 +327,35 @@ footer {
   <!-- How to use -->
   <section class="section" id="howto">
     <div class="section-label">How to use</div>
-    <h2 class="section-title">かんたん<em>4ステップ</em>で始める</h2>
-    <p class="section-desc">アカウント登録不要。ブラウザを開くだけですぐに使えます。</p>
+    <h2 class="section-title"><span class="ja">かんたん<em>4ステップ</em>で始める</span><span class="en">Get Started in <em>4 Steps</em></span></h2>
+    <p class="section-desc"><span class="ja">アカウント登録不要。ブラウザを開くだけですぐに使えます。</span><span class="en">No sign-up needed. Just open your browser and start knitting.</span></p>
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-num">01</div>
         <div class="step-body">
-          <div class="step-title">プロジェクトを作成する</div>
-          <div class="step-desc">右下の「＋」ボタン（PC は「新規プロジェクト」）をタップ。名前・アイコン・テーマカラーを選んで4ステップで登録できます。</div>
+          <div class="step-title"><span class="ja">プロジェクトを作成する</span><span class="en">Create a Project</span></div>
+          <div class="step-desc"><span class="ja">右下の「＋」ボタン（PC は「新規プロジェクト」）をタップ。名前・アイコン・テーマカラーを選んで4ステップで登録できます。</span><span class="en">Tap the "＋" button (or "New Project" on desktop). Choose a name, icon, and color in 4 easy steps.</span></div>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">02</div>
         <div class="step-body">
-          <div class="step-title">針と段数を設定する</div>
-          <div class="step-desc">棒針・かぎ針を選択し、号数・作り目の数・目標段数を入力。目標段数を設定しておくと進捗が自動で計算されます。</div>
+          <div class="step-title"><span class="ja">針と段数を設定する</span><span class="en">Set Needle & Row Target</span></div>
+          <div class="step-desc"><span class="ja">棒針・かぎ針を選択し、号数・作り目の数・目標段数を入力。目標段数を設定しておくと進捗が自動で計算されます。</span><span class="en">Choose knitting or crochet needles, enter size, cast-on count, and target rows. Progress is calculated automatically.</span></div>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">03</div>
         <div class="step-body">
-          <div class="step-title">段数をカウントする</div>
-          <div class="step-desc">「段数カウンター」タブを開き、編み進めるたびに「＋」ボタンをタップ。編み間違えたときは「−」で戻せます。</div>
+          <div class="step-title"><span class="ja">段数をカウントする</span><span class="en">Count Your Rows</span></div>
+          <div class="step-desc"><span class="ja">「段数カウンター」タブを開き、編み進めるたびに「＋」ボタンをタップ。編み間違えたときは「−」で戻せます。</span><span class="en">Open the Row Counter tab and tap "＋" as you knit. Made a mistake? Just tap "−" to go back.</span></div>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">04</div>
         <div class="step-body">
-          <div class="step-title">メモと糸情報を記録する</div>
-          <div class="step-desc">「編み図メモ」タブから編み方のメモや使用糸を追加・編集できます。複数の糸を使う場合もすべて記録できます。</div>
+          <div class="step-title"><span class="ja">メモと糸情報を記録する</span><span class="en">Record Notes & Yarn</span></div>
+          <div class="step-desc"><span class="ja">「編み図メモ」タブから編み方のメモや使用糸を追加・編集できます。複数の糸を使う場合もすべて記録できます。</span><span class="en">Add and edit pattern notes and yarn info from the Pattern Notes tab. Multiple yarns supported.</span></div>
         </div>
       </div>
     </div>
@@ -345,14 +364,14 @@ footer {
   <!-- Data note -->
   <div class="note-strip">
     <div class="note-icon">💾</div>
-    <div class="note-text"><strong>データの保存について：</strong>入力したデータはお使いのブラウザに自動保存されます。同じブラウザであればページを閉じても次回以降もデータが残ります。ブラウザのキャッシュを削除するとデータも消えますのでご注意ください。</div>
+    <div class="note-text"><span class="ja"><strong>データの保存について：</strong>入力したデータはお使いのブラウザに自動保存されます。同じブラウザであればページを閉じても次回以降もデータが残ります。ブラウザのキャッシュを削除するとデータも消えますのでご注意ください。</span><span class="en"><strong>About data storage:</strong> Your data is automatically saved in your browser's local storage. It persists between sessions in the same browser. Clearing your browser cache will also delete your data.</span></div>
   </div>
 
   <!-- CTA -->
   <section class="cta-section">
-    <div class="cta-title">さあ、今日から<br><em>編み始めましょう。</em></div>
-    <p class="cta-desc">登録不要・完全無料。<br>ブラウザを開くだけで今すぐ使えます。</p>
-    <a class="btn-primary" href="knit_note_web.html">KnitNote を使ってみる →</a>
+    <div class="cta-title"><span class="ja">さあ、今日から<br><em>編み始めましょう。</em></span><span class="en">Start knitting<br><em>today.</em></span></div>
+    <p class="cta-desc"><span class="ja">登録不要・完全無料。<br>ブラウザを開くだけで今すぐ使えます。</span><span class="en">No sign-up. Completely free.<br>Open your browser and start right away.</span></p>
+    <a class="btn-primary" href="knit_note_web.html"><span class="ja">KnitNote を使ってみる →</span><span class="en">Try KnitNote →</span></a>
   </section>
 
 
@@ -373,10 +392,10 @@ footer {
   <footer>
     <div class="footer-logo">Knit<em>Note</em></div>
     <div class="footer-links">
-      <a class="footer-link" href="knit_note_web.html">アプリ</a>
-      <a class="footer-link" href="knit_note_about.html">アプリについて</a>
-      <a class="footer-link" href="knit_note_contact.html">お問い合わせ</a>
-      <a class="footer-link" href="knit_note_privacy.html">プライバシーポリシー</a>
+      <a class="footer-link" href="knit_note_web.html"><span class="ja">アプリ</span><span class="en">App</span></a>
+      <a class="footer-link" href="knit_note_about.html"><span class="ja">アプリについて</span><span class="en">About</span></a>
+      <a class="footer-link" href="knit_note_contact.html"><span class="ja">お問い合わせ</span><span class="en">Contact</span></a>
+      <a class="footer-link" href="knit_note_privacy.html"><span class="ja">プライバシーポリシー</span><span class="en">Privacy Policy</span></a>
     </div>
     <div class="footer-copy">© 2026 KNITNOTE</div>
   </footer>
@@ -385,15 +404,34 @@ footer {
 <!-- Bottom nav (mobile) -->
 <nav class="bottom-nav">
   <a class="bottom-nav-item" href="knit_note_web.html">
-    <div class="bottom-nav-icon">🧶</div><div class="bottom-nav-label">アプリ</div>
+    <div class="bottom-nav-icon">🧶</div><div class="bottom-nav-label"><span class="ja">アプリ</span><span class="en">App</span></div>
   </a>
   <a class="bottom-nav-item active" href="knit_note_about.html">
-    <div class="bottom-nav-icon" style="background:var(--terracotta)">📖</div><div class="bottom-nav-label" style="color:var(--terracotta);font-weight:700">アプリについて</div>
+    <div class="bottom-nav-icon" style="background:var(--terracotta)">📖</div><div class="bottom-nav-label" style="color:var(--terracotta);font-weight:700"><span class="ja">アプリについて</span><span class="en">About</span></div>
   </a>
   <a class="bottom-nav-item" href="knit_note_contact.html">
-    <div class="bottom-nav-icon">✉️</div><div class="bottom-nav-label">お問い合わせ</div>
+    <div class="bottom-nav-icon">✉️</div><div class="bottom-nav-label"><span class="ja">お問い合わせ</span><span class="en">Contact</span></div>
   </a>
 </nav>
 
+<script>
+// ── i18n ──────────────────────────────────────────────────────────────────
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  localStorage.setItem('knitnote_lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+(function() {
+  const saved = localStorage.getItem('knitnote_lang') || 'ja';
+  document.documentElement.setAttribute('data-lang', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === saved);
+    });
+  });
+})();
+</script>
 </body>
 </html>
