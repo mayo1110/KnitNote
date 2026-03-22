@@ -714,12 +714,12 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
         <div class="mobile-menu-title">Knit<em>Note</em></div>
         <button class="mobile-menu-close" onclick="closeMobileMenu()">✕</button>
       </div>
-      <div class="mobile-menu-section-label">メニュー</div>
+      <div class="mobile-menu-section-label"><span class="ja">メニュー</span><span class="en">Menu</span></div>
       <a class="mobile-menu-item" href="knit_note_about.html">
-        <span class="mobile-menu-icon">📖</span>アプリについて
+        <span class="mobile-menu-icon">📖</span><span class="ja">アプリについて</span><span class="en">About</span>
       </a>
       <a class="mobile-menu-item" href="knit_note_contact.html">
-        <span class="mobile-menu-icon">✉️</span>お問い合わせ
+        <span class="mobile-menu-icon">✉️</span><span class="ja">お問い合わせ</span><span class="en">Contact</span>
       </a>
     </div>
 
@@ -727,12 +727,12 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
     <div class="page active" id="page-home">
       <div class="page-content">
         <div class="stats-row">
-          <div class="stat-chip"><div class="stat-num" id="stat-active">0</div><div class="stat-label">進行中</div></div>
-          <div class="stat-chip"><div class="stat-num" id="stat-done">0</div><div class="stat-label">完成</div></div>
-          <div class="stat-chip"><div class="stat-num" id="stat-yarn">0</div><div class="stat-label">糸の種類</div></div>
+          <div class="stat-chip"><div class="stat-num" id="stat-active">0</div><div class="stat-label"><span class="ja">進行中</span><span class="en">Active</span></div></div>
+          <div class="stat-chip"><div class="stat-num" id="stat-done">0</div><div class="stat-label"><span class="ja">完成</span><span class="en">Done</span></div></div>
+          <div class="stat-chip"><div class="stat-num" id="stat-yarn">0</div><div class="stat-label"><span class="ja">糸の種類</span><span class="en">Yarn Types</span></div></div>
         </div>
         <div class="section-head">
-          <h2>プロジェクト一覧</h2>
+          <h2><span class="ja">プロジェクト一覧</span><span class="en">All Projects</span></h2>
         </div>
         <div class="project-grid" id="projectList"></div>
       </div>
@@ -797,7 +797,7 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
     <!-- FORM -->
     <div id="formContent">
       <div class="sheet-header">
-        <div class="sheet-title">New <em>Project</em></div>
+        <div class="sheet-title"><span class="ja">新規 <em>プロジェクト</em></span><span class="en">New <em>Project</em></span></div>
         <button class="btn-close" onclick="closeModal()">✕</button>
       </div>
       <div class="steps-row">
@@ -810,12 +810,12 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
 
       <div class="form-step active" id="step-0">
         <div class="field">
-          <label class="field-label">プロジェクト名（必須）</label>
+          <label class="field-label"><span class="ja">プロジェクト名（必須）</span><span class="en">Project Name (required)</span></label>
           <input class="field-input" id="f-name" type="text" placeholder="例：秋のケーブルマフラー" maxlength="40">
-          <div class="field-error" id="name-error">プロジェクト名は必須です</div>
+          <div class="field-error" id="name-error"><span class="ja">プロジェクト名は必須です</span><span class="en">Project name is required</span></div>
         </div>
         <div class="field">
-          <label class="field-label">アイコンを選ぶ</label>
+          <label class="field-label"><span class="ja">アイコンを選ぶ</span><span class="en">Choose an Icon</span></label>
           <div class="icon-grid">
             <button class="icon-btn selected" data-icon="🧣" onclick="selectIcon(this)">🧣</button>
             <button class="icon-btn" data-icon="🧤" onclick="selectIcon(this)">🧤</button>
@@ -832,7 +832,7 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
           </div>
         </div>
         <div class="field">
-          <label class="field-label">テーマカラー</label>
+          <label class="field-label"><span class="ja">テーマカラー</span><span class="en">Theme Color</span></label>
           <div class="color-grid">
             <div class="color-btn selected" data-color="#b5634a" style="background:#b5634a" onclick="selectColor(this)"></div>
             <div class="color-btn" data-color="#8a9e8c" style="background:#8a9e8c" onclick="selectColor(this)"></div>
@@ -845,16 +845,16 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
           </div>
         </div>
         <div class="form-nav">
-          <button class="btn-next" onclick="goStep(1)">次へ：針と段数 →</button>
+          <button class="btn-next" onclick="goStep(1)"><span class="ja">次へ：針と段数 →</span><span class="en">Next: Needles & Rows →</span></button>
         </div>
       </div>
 
       <div class="form-step" id="step-1">
         <div class="field">
-          <label class="field-label">針の種類</label>
+          <label class="field-label"><span class="ja">針の種類</span><span class="en">Needle Type</span></label>
           <div class="needle-type-row">
-            <div class="needle-type-btn selected" id="ntype-bar" onclick="selectNeedleType('棒針')"><span class="needle-type-label">棒針</span></div>
-            <div class="needle-type-btn" id="ntype-crochet" onclick="selectNeedleType('かぎ針')"><span class="needle-type-label">かぎ針</span></div>
+            <div class="needle-type-btn selected" id="ntype-bar" onclick="selectNeedleType('棒針')"><span class="needle-type-label"><span class="ja">棒針</span><span class="en">Knitting</span></span></div>
+            <div class="needle-type-btn" id="ntype-crochet" onclick="selectNeedleType('かぎ針')"><span class="needle-type-label"><span class="ja">かぎ針</span><span class="en">Crochet</span></span></div>
           </div>
         </div>
         <div class="field">
@@ -862,7 +862,7 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
           <input class="field-input" id="f-needle-size" type="text" placeholder="例：6号、4.0mm">
         </div>
         <div class="field">
-          <label class="field-label">作り目の数</label>
+          <label class="field-label"><span class="ja">作り目の数</span><span class="en">Cast-on Count</span></label>
           <div class="stepper">
             <button class="stepper-btn" onclick="stepperChange('castOn',-2)">−</button>
             <input class="stepper-val" id="castOn" type="number" value="40" min="1">
@@ -870,7 +870,7 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
           </div>
         </div>
         <div class="field">
-          <label class="field-label">目標段数</label>
+          <label class="field-label"><span class="ja">目標段数</span><span class="en">Target Rows</span></label>
           <div class="stepper">
             <button class="stepper-btn" onclick="stepperChange('targetRow',-5)">−</button>
             <input class="stepper-val" id="targetRow" type="number" value="100" min="1">
@@ -878,18 +878,18 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
           </div>
         </div>
         <div class="field">
-          <label class="field-label">ゲージ（参考）</label>
+          <label class="field-label"><span class="ja">ゲージ（参考）</span><span class="en">Gauge (reference)</span></label>
           <input class="field-input" id="f-gauge" type="text" placeholder="例：22目 × 30段">
         </div>
         <div class="form-nav">
           <button class="btn-back" onclick="goStep(0)">←</button>
-          <button class="btn-next" onclick="goStep(2)">次へ：使用糸 →</button>
+          <button class="btn-next" onclick="goStep(2)"><span class="ja">次へ：使用糸 →</span><span class="en">Next: Yarn →</span></button>
         </div>
       </div>
 
       <div class="form-step" id="step-2">
         <div class="field">
-          <label class="field-label">使用糸</label>
+          <label class="field-label"><span class="ja">使用糸</span><span class="en">Yarn</span></label>
           <div id="yarnList">
             <div class="yarn-entry" id="yarn-0">
               <button class="yarn-delete" onclick="deleteYarn(0)">✕</button>
@@ -898,26 +898,26 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
                 <input class="field-input" style="margin:0" type="text" placeholder="糸の名前" id="yarnName0">
               </div>
               <div class="field-row" style="gap:8px">
-                <input class="field-input" type="text" placeholder="ブランド" id="yarnBrand0" style="flex:1">
-                <input class="field-input" type="text" placeholder="カラー名" id="yarnColorName0" style="flex:1">
+                <input class="field-input" type="text" placeholder="${t('ブランド','Brand')}" id="yarnBrand0" style="flex:1">
+                <input class="field-input" type="text" placeholder="${t('カラー名','Color name')}" id="yarnColorName0" style="flex:1">
               </div>
             </div>
           </div>
-          <button class="btn-add-yarn" onclick="addYarnField()">＋ 糸を追加する</button>
+          <button class="btn-add-yarn" onclick="addYarnField()"><span class="ja">＋ 糸を追加する</span><span class="en">＋ Add Yarn</span></button>
         </div>
         <div class="form-nav">
           <button class="btn-back" onclick="goStep(1)">←</button>
-          <button class="btn-next" onclick="goStep(3)">次へ：メモ・確認 →</button>
+          <button class="btn-next" onclick="goStep(3)"><span class="ja">次へ：メモ・確認 →</span><span class="en">Next: Notes & Preview →</span></button>
         </div>
       </div>
 
       <div class="form-step" id="step-3">
         <div class="field">
-          <label class="field-label">編み図メモ（任意）</label>
+          <label class="field-label"><span class="ja">編み図メモ（任意）</span><span class="en">Pattern Notes (optional)</span></label>
           <textarea class="field-input" id="f-notes" placeholder="段ごとの指示、特記事項など…"></textarea>
         </div>
         <div class="field">
-          <label class="field-label">プレビュー</label>
+          <label class="field-label"><span class="ja">プレビュー</span><span class="en">Preview</span></label>
           <div class="preview-card" id="previewCard">
             <div class="preview-icon-name">
               <span class="preview-icon" id="previewIcon">🧣</span>
@@ -929,7 +929,7 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
         </div>
         <div class="form-nav">
           <button class="btn-back" onclick="goStep(2)">←</button>
-          <button class="btn-next" onclick="submitForm()">✦ プロジェクトを作成</button>
+          <button class="btn-next" onclick="submitForm()"><span class="ja">✦ プロジェクトを作成</span><span class="en">✦ Create Project</span></button>
         </div>
       </div>
     </div>
@@ -940,7 +940,7 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
       <div class="success-content">
         <div class="success-icon">🎉</div>
         <div class="success-title">Project <em>Created!</em></div>
-        <div class="success-sub">プロジェクトが追加されました。<br>さっそく編み始めましょう！</div>
+        <div class="success-sub"><span class="ja">プロジェクトが追加されました。<br>さっそく編み始めましょう！</span><span class="en">Your project has been added.<br>Time to start knitting!</span></div>
         <div class="preview-card" id="successCard" style="width:100%">
           <div class="preview-icon-name">
             <span class="preview-icon" id="successIcon">🧣</span>
@@ -949,8 +949,8 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
           <div class="preview-meta" id="successMeta">—</div>
           <div class="preview-progress-bar"><div class="preview-progress-fill"></div></div>
         </div>
-        <button class="btn-start" onclick="startCounting()">段数カウンターへ →</button>
-        <button class="btn-another" onclick="resetForm()">別のプロジェクトを追加</button>
+        <button class="btn-start" onclick="startCounting()"><span class="ja">段数カウンターへ →</span><span class="en">Go to Row Counter →</span></button>
+        <button class="btn-another" onclick="resetForm()"><span class="ja">別のプロジェクトを追加</span><span class="en">Add Another Project</span></button>
         <div style="height:20px"></div>
       </div>
     </div>
@@ -958,23 +958,23 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
     <!-- EDIT -->
     <div id="editContent" style="display:none">
       <div class="sheet-header">
-        <div class="sheet-title">Edit <em>Notes</em></div>
+        <div class="sheet-title"><span class="ja">メモを <em>編集</em></span><span class="en">Edit <em>Notes</em></span></div>
         <button class="btn-close" onclick="closeModal()">✕</button>
       </div>
       <div style="padding:20px 28px 0">
         <div class="field">
-          <label class="field-label">編み図メモ</label>
+          <label class="field-label"><span class="ja">編み図メモ</span><span class="en">Pattern Notes</span></label>
           <textarea class="field-input" id="edit-notes" placeholder="段ごとの指示、特記事項など…" style="height:130px"></textarea>
         </div>
       </div>
       <div style="padding:0 28px">
-        <label class="field-label" style="display:block;margin-bottom:8px">使用糸</label>
+        <label class="field-label" style="display:block;margin-bottom:8px"><span class="ja">使用糸</span><span class="en">Yarn</span></label>
         <div id="editYarnList"></div>
-        <button class="btn-add-yarn" onclick="addEditYarnField()">＋ 糸を追加する</button>
+        <button class="btn-add-yarn" onclick="addEditYarnField()"><span class="ja">＋ 糸を追加する</span><span class="en">＋ Add Yarn</span></button>
       </div>
       <div class="form-nav">
-        <button class="btn-back text" onclick="closeModal()">キャンセル</button>
-        <button class="btn-next" onclick="saveEdit()">✦ 保存する</button>
+        <button class="btn-back text" onclick="closeModal()"><span class="ja">キャンセル</span><span class="en">Cancel</span></button>
+        <button class="btn-next" onclick="saveEdit()"><span class="ja">✦ 保存する</span><span class="en">✦ Save</span></button>
       </div>
       <div style="height:20px"></div>
     </div>
@@ -987,7 +987,7 @@ let projects = JSON.parse(localStorage.getItem('knitnote_projects') || '[]');
 let activeProjectId = null;
 let formState = { icon:'🧣', color:'#b5634a', needleType:'棒針', currentStep:0 };
 let yarnFieldIdx = 1;
-const stepLabels = ['基本情報','針と段数','使用する糸','メモ・確認'];
+
 const colorPairs = {
   '#b5634a':['#b5634a','#c9a090'], '#8a9e8c':['#8a9e8c','#c8d8c4'],
   '#6b8faf':['#6b8faf','#a8c0d4'], '#a07ab5':['#a07ab5','#c8a8d8'],
@@ -995,7 +995,7 @@ const colorPairs = {
   '#d47a6a':['#d47a6a','#e8b0a0'], '#5a8a7a':['#5a8a7a','#8ab8a8'],
 };
 const pageTitles = {
-  'page-home': 'My <em>Projects</em>',
+  'page-home': getLang()==='en'?'My <em>Projects</em>':'マイ <em>プロジェクト</em>',
   'page-counter': 'Row <em>Counter</em>',
   'page-pattern': 'Pattern <em>Notes</em>',
 };
@@ -1046,7 +1046,7 @@ function renderHome() {
   if (projects.length === 0) {
     list.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
       <div class="empty-icon">🧶</div>
-      <p>まだプロジェクトがありません。<br>「＋ 新規プロジェクト」から追加しましょう！</p>
+      <p>${t('まだプロジェクトがありません。<br>「＋ 新規プロジェクト」から追加しましょう！','No projects yet.<br>Tap "＋ New Project" to get started!')}</p>
       <button class="empty-cta" onclick="openModal()">＋ 新規プロジェクト</button>
     </div>`;
     return;
@@ -1056,9 +1056,9 @@ function renderHome() {
     const remaining = Math.max(0, p.targetRow - p.currentRow);
     const [c1,c2] = colorPairs[p.color] || [p.color, p.color+'99'];
     const yarn0 = p.yarns && p.yarns[0];
-    const yarnLabel = yarn0 ? `🧶 ${[yarn0.brand,yarn0.name,yarn0.colorName].filter(Boolean).join(' — ')}` : '糸情報なし';
+    const yarnLabel = yarn0 ? `🧶 ${[yarn0.brand,yarn0.name,yarn0.colorName].filter(Boolean).join(' — ')}` : t('糸情報なし','No yarn info');
     const statusClass = p.status==='active'?'status-active':p.status==='done'?'status-done':'status-paused';
-    const statusLabel = p.status==='active'?'進行中':p.status==='done'?'完成':'一時停止';
+    const statusLabel = p.status==='active'?t('進行中','Active'):p.status==='done'?t('完成','Done'):t('一時停止','Paused');
     return `<div class="project-card" style="--tc1:${c1};--tc2:${c2}" onclick="openProject(${i})">
       <div class="project-top">
         <span class="project-icon">${p.icon}</span>
@@ -1068,7 +1068,7 @@ function renderHome() {
       <div class="project-yarn">${yarnLabel}</div>
       <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${pct}%;--tc1:${c1};--tc2:${c2}"></div></div>
       <div class="project-bottom">
-        <span class="progress-text">${pct}%${remaining>0?` — あと${remaining}段`:' — 完成！'}</span>
+        <span class="progress-text">${pct}%${remaining>0?` — ${t('あと','')+(getLang()==='en'?remaining+' rows left':remaining+'段')}`:t(' — 完成！',' — Done!')}</span>
         <span class="row-badge">現在 ${p.currentRow}段目</span>
       </div>
     </div>`;
@@ -1130,7 +1130,7 @@ function updateCounterUI(row, target) {
   el.textContent = row;
   const pct = target > 0 ? Math.min(100, row/target*100) : 0;
   document.getElementById('rowProgBar').style.width = pct + '%';
-  document.getElementById('rowProgText').textContent = `${row} / ${target}段`;
+  document.getElementById('rowProgText').textContent = `${row} / ${target} ${t('段','rows')}`;
   document.getElementById('rowProgPct').textContent  = Math.round(pct) + '%';
   renderHistory(row);
 }
@@ -1173,7 +1173,7 @@ function renderPattern() {
   if (patternProjectIdx >= projects.length) patternProjectIdx = 0;
   sel.innerHTML = projects.map((p,i) =>
     `<div class="proj-chip${i===patternProjectIdx?' active':''}" onclick="selectPatternProject(${i})">${p.name}</div>`
-  ).join('') + `<div class="proj-chip" onclick="openModal()">＋ 追加</div>`;
+  ).join('') + `<div class="proj-chip" onclick="openModal()">${t('＋ 追加','＋ Add')}</div>`;
 
   const p = projects[patternProjectIdx];
   const yarns = (p.yarns||[]).filter(y=>y.name);
@@ -1182,7 +1182,7 @@ function renderPattern() {
       <div>
         <div class="needle-chips">
           <div class="needle-chip"><div class="needle-chip-icon">🪡</div><div><div class="needle-chip-size">${p.needle||'—'}</div><div class="needle-chip-type">針</div></div></div>
-          <div class="needle-chip"><div class="needle-chip-icon">🔢</div><div><div class="needle-chip-size">作り目 ${p.castOn||'—'}目</div><div class="needle-chip-type">${p.gauge||'ゲージ未設定'}</div></div></div>
+          <div class="needle-chip"><div class="needle-chip-icon">🔢</div><div><div class="needle-chip-size">作り目 ${p.castOn||'—'}目</div><div class="needle-chip-type">${p.gauge||t('ゲージ未設定','No gauge set')}</div></div></div>
         </div>
         <div class="pattern-card">
           <div class="pattern-card-head">
@@ -1247,7 +1247,8 @@ function goStep(n) {
   document.getElementById(`step-${n}`).classList.add('active');
   document.getElementById(`dot-${n}`).classList.remove('done');
   document.getElementById(`dot-${n}`).classList.add('active');
-  document.getElementById('stepLabel').textContent = stepLabels[n];
+  const _sl = getLang()==='en'?['Basic Info','Needles & Rows','Yarn','Notes & Preview']:['基本情報','針と段数','使用する糸','メモ・確認'];
+  document.getElementById('stepLabel').textContent = _sl[n];
   if (n === 3) updatePreview();
   document.getElementById('modalSheet').scrollTo({ top:0, behavior:'smooth' });
 }
@@ -1263,8 +1264,8 @@ function selectNeedleType(type) {
   formState.needleType = type;
   document.getElementById('ntype-bar').classList.toggle('selected', type==='棒針');
   document.getElementById('ntype-crochet').classList.toggle('selected', type==='かぎ針');
-  document.getElementById('needle-size-label').textContent = type==='棒針'?'号数・サイズ（棒針）':'号数・サイズ（かぎ針）';
-  document.getElementById('f-needle-size').placeholder = type==='棒針'?'例：6号、4.0mm':'例：5/0号、3.0mm';
+  document.getElementById('needle-size-label').textContent = type==='棒針'?t('号数・サイズ（棒針）','Size (Knitting needles)'):t('号数・サイズ（かぎ針）','Size (Crochet hook)');
+  document.getElementById('f-needle-size').placeholder = type==='棒針'?t('例：6号、4.0mm','e.g. US 10, 6mm'):t('例：5/0号、3.0mm','e.g. 5/0, 3mm');
 }
 function stepperChange(id, delta) {
   const el = document.getElementById(id);
@@ -1277,11 +1278,11 @@ function addYarnField() {
   div.innerHTML=`<button class="yarn-delete" onclick="deleteYarn(${i})">✕</button>
     <div class="yarn-entry-row">
       <input type="color" class="yarn-color-pick" value="#8a9e8c" id="yarnColor${i}">
-      <input class="field-input" style="margin:0" type="text" placeholder="糸の名前" id="yarnName${i}">
+      <input class="field-input" style="margin:0" type="text" placeholder="${t('糸の名前','Yarn name')}" id="yarnName${i}">
     </div>
     <div class="field-row" style="gap:8px">
-      <input class="field-input" type="text" placeholder="ブランド" id="yarnBrand${i}" style="flex:1">
-      <input class="field-input" type="text" placeholder="カラー名" id="yarnColorName${i}" style="flex:1">
+      <input class="field-input" type="text" placeholder="${t('ブランド','Brand')}" id="yarnBrand${i}" style="flex:1">
+      <input class="field-input" type="text" placeholder="${t('カラー名','Color name')}" id="yarnColorName${i}" style="flex:1">
     </div>`;
   document.getElementById('yarnList').appendChild(div);
 }
@@ -1310,8 +1311,8 @@ function updatePreview() {
   const [c1,c2]= colorPairs[formState.color]||[formState.color,formState.color];
   document.getElementById('previewIcon').textContent = formState.icon;
   document.getElementById('previewName').textContent = name;
-  let meta = `🪡 ${needle}　🔢 作り目 ${cast}目　目標 ${target}段`;
-  if (gauge) meta += `\nゲージ: ${gauge}`;
+  let meta = `🪡 ${needle}　🔢 ${t('作り目','Cast-on')} ${cast}${t('目','')}　${t('目標','Target')} ${target}${t('段',' rows')}`;
+  if (gauge) meta += `\n${t('ゲージ','Gauge')}: ${gauge}`;
   if (yarns[0]?.name) meta += `\n🧶 ${yarns[0].name}`;
   document.getElementById('previewMeta').textContent = meta;
   document.getElementById('previewBar').style.background = `linear-gradient(90deg,${c1},${c2})`;
@@ -1338,7 +1339,7 @@ function submitForm() {
   document.getElementById('successName').textContent = project.name;
   const yarn0 = yarns[0];
   document.getElementById('successMeta').textContent =
-    `🪡 ${project.needle}　目標 ${project.targetRow}段${yarn0?.name?'\n🧶 '+yarn0.name:''}`;
+    `🪡 ${project.needle}　${t('目標','Target')} ${project.targetRow}${t('段',' rows')}${yarn0?.name?'\n🧶 '+yarn0.name:''}`;
   document.getElementById('successCard').style.setProperty('--pc1',c1);
   document.getElementById('successCard').style.setProperty('--pc2',c2);
   document.getElementById('formContent').style.display = 'none';
@@ -1358,13 +1359,13 @@ function resetFormUI() {
   document.querySelectorAll('.form-step').forEach((s,i)=>s.classList.toggle('active',i===0));
   document.querySelectorAll('.step-dot').forEach((d,i)=>{d.classList.remove('active','done');if(i===0)d.classList.add('active');});
   formState={icon:'🧣',color:'#b5634a',needleType:'棒針',currentStep:0};
-  document.getElementById('stepLabel').textContent=stepLabels[0];
+  document.getElementById('stepLabel').textContent=getLang()==='en'?'Basic Info':'基本情報';
   document.querySelectorAll('.icon-btn').forEach((b,i)=>b.classList.toggle('selected',i===0));
   document.querySelectorAll('.color-btn').forEach((b,i)=>b.classList.toggle('selected',i===0));
   document.getElementById('ntype-bar').classList.add('selected');
   document.getElementById('ntype-crochet').classList.remove('selected');
-  document.getElementById('needle-size-label').textContent='号数・サイズ（棒針）';
-  document.getElementById('f-needle-size').placeholder='例：6号、4.0mm';
+  document.getElementById('needle-size-label').textContent=getLang()==='en'?'Size (Knitting needles)':'号数・サイズ（棒針）';
+  document.getElementById('f-needle-size').placeholder=getLang()==='en'?'e.g. US 10, 6mm':'例：6号、4.0mm';
   yarnFieldIdx=1;
   document.getElementById('yarnList').innerHTML=`<div class="yarn-entry" id="yarn-0">
     <button class="yarn-delete" onclick="deleteYarn(0)">✕</button>
@@ -1402,11 +1403,11 @@ function appendEditYarnField(y) {
   div.innerHTML=`<button class="yarn-delete" onclick="removeEditYarn(${i})">✕</button>
     <div class="yarn-entry-row">
       <input type="color" class="yarn-color-pick" value="${y.color||'#d4956a'}" id="eyColor${i}">
-      <input class="field-input" style="margin:0" type="text" placeholder="糸の名前" id="eyName${i}" value="${y.name||''}">
+      <input class="field-input" style="margin:0" type="text" placeholder="${t('糸の名前','Yarn name')}" id="eyName${i}" value="${y.name||''}">
     </div>
     <div class="field-row" style="gap:8px">
-      <input class="field-input" type="text" placeholder="ブランド" id="eyBrand${i}" value="${y.brand||''}" style="flex:1">
-      <input class="field-input" type="text" placeholder="カラー名" id="eyColorName${i}" value="${y.colorName||''}" style="flex:1">
+      <input class="field-input" type="text" placeholder="${t('ブランド','Brand')}" id="eyBrand${i}" value="${y.brand||''}" style="flex:1">
+      <input class="field-input" type="text" placeholder="${t('カラー名','Color name')}" id="eyColorName${i}" value="${y.colorName||''}" style="flex:1">
     </div>`;
   document.getElementById('editYarnList').appendChild(div);
 }
@@ -1448,12 +1449,20 @@ if (projects.length > 0) {
 </script>
 <script>
 // ── i18n ──────────────────────────────────────────────────────────────────
+function getLang() {
+  return document.documentElement.getAttribute('data-lang') || 'ja';
+}
+function t(ja, en) { return getLang() === 'en' ? en : ja; }
 function setLang(lang) {
   document.documentElement.setAttribute('data-lang', lang);
   localStorage.setItem('knitnote_lang', lang);
   document.querySelectorAll('.lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === lang);
   });
+  // re-render dynamic content
+  renderHome();
+  if (typeof renderPattern === 'function' && document.getElementById('page-pattern').classList.contains('active')) renderPattern();
+  if (activeProjectId !== null) { renderCounterSelector(); }
 }
 (function() {
   const saved = localStorage.getItem('knitnote_lang') || 'ja';
