@@ -898,8 +898,8 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
                 <input class="field-input" style="margin:0" type="text" placeholder="糸の名前" id="yarnName0">
               </div>
               <div class="field-row" style="gap:8px">
-                <input class="field-input" type="text" placeholder="${t('ブランド','Brand')}" id="yarnBrand0" style="flex:1">
-                <input class="field-input" type="text" placeholder="${t('カラー名','Color name')}" id="yarnColorName0" style="flex:1">
+                <input class="field-input" type="text" placeholder="ブランド" id="yarnBrand0" style="flex:1">
+                <input class="field-input" type="text" placeholder="カラー名" id="yarnColorName0" style="flex:1">
               </div>
             </div>
           </div>
@@ -982,6 +982,34 @@ textarea.field-input { resize: none; height: 110px; line-height: 1.6; }
 </div>
 
 <script>
+// ── i18n ──────────────────────────────────────────────────────────────────
+// 注意: getLang()/t() はメインスクリプトの読み込み時（pageTitles の初期化や
+// 末尾の renderHome()）に使用されるため、メインスクリプトより前に定義する。
+function getLang() {
+  return document.documentElement.getAttribute('data-lang') || 'ja';
+}
+function t(ja, en) { return getLang() === 'en' ? en : ja; }
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  localStorage.setItem('knitnote_lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  // re-render dynamic content
+  renderHome();
+  if (typeof renderPattern === 'function' && document.getElementById('page-pattern').classList.contains('active')) renderPattern();
+  if (activeProjectId !== null) { renderCounterSelector(); }
+}
+(function() {
+  const saved = localStorage.getItem('knitnote_lang') || 'ja';
+  document.documentElement.setAttribute('data-lang', saved);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === saved);
+    });
+  });
+})();
+
 // ── Data ──────────────────────────────────────────────────────────────────
 let projects = JSON.parse(localStorage.getItem('knitnote_projects') || '[]');
 let activeProjectId = null;
@@ -1446,33 +1474,6 @@ if (projects.length > 0) {
   activeProjectId = 0;
   renderCounterSelector();
 }
-</script>
-<script>
-// ── i18n ──────────────────────────────────────────────────────────────────
-function getLang() {
-  return document.documentElement.getAttribute('data-lang') || 'ja';
-}
-function t(ja, en) { return getLang() === 'en' ? en : ja; }
-function setLang(lang) {
-  document.documentElement.setAttribute('data-lang', lang);
-  localStorage.setItem('knitnote_lang', lang);
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.lang === lang);
-  });
-  // re-render dynamic content
-  renderHome();
-  if (typeof renderPattern === 'function' && document.getElementById('page-pattern').classList.contains('active')) renderPattern();
-  if (activeProjectId !== null) { renderCounterSelector(); }
-}
-(function() {
-  const saved = localStorage.getItem('knitnote_lang') || 'ja';
-  document.documentElement.setAttribute('data-lang', saved);
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.lang-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.lang === saved);
-    });
-  });
-})();
 </script>
 </body>
 </html>
